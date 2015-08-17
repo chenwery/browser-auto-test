@@ -1,7 +1,7 @@
 {
-  "name": "webpack_demo",
+  "name": "browser auto test platform",
   "version": "0.0.1",
-  "description": "webpack demo",
+  "description": "browser auto test platform",
   "main": "index.js",
   "dependencies": {
     "webpack": "^1.11.0"
