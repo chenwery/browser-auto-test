@@ -1,8 +1,14 @@
 #Browser Auto Test
 
 ####start
-```npm install -g webpack
+```
+npm install -g webpack
+```
 
-```npm install
+```
+npm install
+```
 
-```webpack -d -w
+```
+webpack -d -w
+```
