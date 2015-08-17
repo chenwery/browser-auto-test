@@ -1,0 +1,44 @@
+body {
+    font-family: Microsoft YaHei,"微软雅黑","MicrosoftJhengHei","华文细黑",STHeiti,MingLiu;
+    
+    .page-wrapper {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #fff;
+        overflow: auto;
+    }
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0;
+
+    li {
+        list-style: none inside;
+    }
+}
+
+h2.page-header {
+    position: relative;
+
+    margin: 20px 0 30px;
+
+    &:before {
+        content: "";
+
+        position: relative;
+        top: 5px;
+
+        display: inline-block;
+
+        margin-right: 3px;
+        width: 5px;
+        height: 32px;
+
+        background-color: #337ab7;
+        
+    }
+}

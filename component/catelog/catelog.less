@@ -1,0 +1,123 @@
+.catelog {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    bottom: 0;
+    
+    padding: 0 10px;
+    width: 220px;
+
+    overflow: auto;
+    
+    background-color: #313c48;
+
+    color: #afbbc9;
+
+    &::-webkit-scrollbar-track-piece{background-color:#fff;}
+    &::-webkit-scrollbar{width:3px;}
+    &::-webkit-scrollbar-thumb{background:#999;} 
+
+    .catelog-add {
+        display: flex;
+        justify-content: space-between;
+
+        line-height: 35px;
+    }
+
+    .catelog-add-btn {
+        font-size: 25px;
+        font-weight: bold;
+        color: #afbbc9;
+
+        cursor: pointer;
+
+        &:hover {
+            color: #337ab7;
+            text-decoration: none;
+        }
+    }
+}
+
+.catelog-list {
+    line-height: 45px;
+
+    .toggle-sub {
+        position: relative;
+
+        display: block;
+
+        color: #afbbc9;
+        cursor: pointer;
+
+        -webkit-user-select: none;
+
+        &:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        
+    }
+
+    .toggle-sub:before {
+        margin: 0 3px 0 0;
+
+        content: "\e117";
+        font-family: "Glyphicons Halflings";
+        vertical-align: bottom;
+    }
+
+    .toggle-sub:after {
+        content: "";
+
+        position: absolute;
+        right: 9px;
+        top: 19px;
+        
+        display: block;
+        
+        width: 8px;
+        height: 8px;
+
+        border-width: 1px 1px 0 0;
+        border-style: solid;
+        border-color: #afbbc9;
+
+        transform: rotate(45deg);
+        transition: 0.1s ease;
+    }
+
+    .open .toggle-sub:after {
+        transform: rotate(135deg);
+    }
+
+    .page-list {
+        display: none;
+
+        padding: 0 0 0 15px;
+    }
+
+    .page-item {
+        display: block;
+
+        color: #afbbc9;
+        cursor: pointer;
+
+        &:hover {
+            text-indent: 2px;
+
+            color: #fff;
+            text-decoration: none;
+        }
+
+        &.active {
+            text-indent: 2px;
+            font-weight: bold;
+            color: #337ab7;
+        }
+    }
+
+    .open .page-list {
+        display: block;
+    }
+} 
