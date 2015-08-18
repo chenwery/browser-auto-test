@@ -13,7 +13,8 @@ var Test = React.createClass({
         }),
         onDelete: React.PropTypes.func,
         opentTestDetail: React.PropTypes.func,
-        onRun: React.PropTypes.func
+        onRun: React.PropTypes.func,
+        onView: React.PropTypes.func
     },
     getInitialState: function () {
         return {
@@ -94,8 +95,11 @@ var Test = React.createClass({
     },
     viewTest: function (e) {
         var id = this.props.info.id;
+        var name = this.props.info.name;
         
         e.preventDefault();
+
+        this.props.onView && this.props.onView(id, name);
     }
 });
 

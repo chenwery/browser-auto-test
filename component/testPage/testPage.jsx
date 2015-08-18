@@ -54,7 +54,8 @@ var TestPage = React.createClass({
                         testList={testList}
                         opentTestDetail={this.showSteps}
                         onDelete={this.delTest}
-                        onRun={this.runTest} />
+                        onRun={this.runTest}
+                        onView={this.runTest} />
                 
                 </div>
 
