@@ -3,6 +3,8 @@
         {
             "name": "QQ群活动",
             "id": 123453434,
+            "description": "PC端的群活动模块2",
+            "cookie": "cookie1=123;cookie2=abc3h",
             "pages": [
                 {
                     "name": "首页",
@@ -13,11 +15,15 @@
         },
         {
             "name": "家校群",
-            "id": 4343534
+            "id": 4343534,
+            "description": "PC端的群活动模块1",
+            "cookie": "cookie1=123;cookie2=abc3h"
         },
         {
             "name": "手Q群活动",
             "id": 9654576565,
+            "description": "PC端的群活动模块3",
+            "cookie": "cookie1=123;cookie2=abc3h",
             "pages": [
                 {
                     "name": "详情页",

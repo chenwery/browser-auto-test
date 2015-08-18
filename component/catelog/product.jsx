@@ -12,7 +12,8 @@ var Product = React.createClass({
         id: React.PropTypes.number,
         name: React.PropTypes.string,
         open: React.PropTypes.bool,
-        toggle: React.PropTypes.func
+        toggle: React.PropTypes.func,
+        onChange: React.PropTypes.func
     },
     getInitialState: function () {
         return {
@@ -44,6 +45,7 @@ var Product = React.createClass({
 
     // 展开产品线时父级会改变open属性，从而会设置其他产品线为收起
     componentWillReceiveProps: function (newProps) {
+        console.log('change prod');
         this.setState({
             open: newProps.open,
             pages: newProps.pages
@@ -51,20 +53,11 @@ var Product = React.createClass({
     },
     openProd: function () {
         var prodId = this.props.id;
-        var toggleProduct = this.props.toggle;
         
-        this.toggleOpen();
-        
-        toggleProduct && toggleProduct.call(null, prodId);
+        // 通过父级修改open属性来切换各个产品线的展开收起状态
+        this.props.toggle && this.props.toggle(prodId);
 
         this.showProdInfo();
-    },
-
-    // 展开收起
-    toggleOpen: function () {
-        this.setState({
-            open: !this.state.open
-        });
     },
 
     // 切换页面active状态
@@ -110,15 +103,25 @@ var Product = React.createClass({
         );
     },
 
-    showProdInfo: function (prodId) {
+    showProdInfo: function () {
         var ProdInfo = require('../prodInfo/prodInfo');
+        var info = {
+            id: this.props.id,
+            name: this.props.name,
+            description: this.props.description,
+            cookie: this.props.cookie
+        };
         
         React.render(
             <ProdInfo
-                name={this.props.name}
-                id={this.props.id} />,
+                info={info}
+                onChange={this.onChange} />,
             document.querySelector('#index')
         );
+    },
+
+    onChange: function (newInfo) {
+        this.props.onChange && this.props.onChange(newInfo);
     }
 });
 

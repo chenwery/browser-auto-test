@@ -6,8 +6,13 @@ var ajax = require('../../lib/ajax');
 
 var ProdInfo = React.createClass({
     proTypes: {
-        id: React.PropTypes.number.isRequire,
-        name: React.PropTypes.string
+        info: React.PropTypes.shape({
+            id: React.PropTypes.number.isRequire,
+            name: React.PropTypes.string,
+            description: React.PropTypes.string,
+            cookie: React.PropTypes.string
+        }),
+        onChange: React.PropTypes.func
     },
     getInitialState: function () {
         return {
@@ -15,10 +20,9 @@ var ProdInfo = React.createClass({
         };
     },
     render: function () {
-        var name = this.state.name || this.props.name;
-        var description = this.state.description;
-        var description = this.state.description;
-        var cookie = this.state.cookie;
+        var name = this.state.name || this.props.info.name;
+        var description = this.state.description || this.props.info.description;
+        var cookie = this.state.cookie || this.props.info.cookie;
 
         return (
             <div className="product-info">
@@ -35,27 +39,54 @@ var ProdInfo = React.createClass({
         );
     },
     componentDidMount: function () {
-        this.showProdInfo();
-    },
-    componentDidUpdate: function (oldProps) {
+        if (this.props.info.description) {
 
-        // 切换产品(更新)时重新拉取新的产品信息
-        if (oldProps.id !== this.props.id) {
-            console.log('open new product');
+            // 包含description说明传入了具体信息
+            // 已经传入了具体信息info，则第一次渲染之后把传入的info同步到当前state
+            this.setState(this.props.info);
+        } else {
+
+            // 否则，网络拉取产品信息
             this.showProdInfo();
         }
     },
+
+    // 切换产品时会传入新的info,需要同步到当前state中
+    componentWillReceiveProps: function (newProps) {
+        if (newProps.info.description) {
+
+            // 已经传入了具体信息info，则第一次渲染之后把传入的info同步到当前state
+            this.setState(newProps.info);
+        } else {
+
+            // 否则，网络拉取产品信息
+            this.showProdInfo();
+        }
+    },
+
+    // 切换产品(更新)时重新拉取新的产品信息
+    componentDidUpdate: function (oldProps) {
+        if (oldProps.id !== this.props.id) {
+            console.log('open new product');
+            //this.showProdInfo();
+        }
+    },
+
+    // 通过网络获取产品信息
     showProdInfo: function () {
-        var id = this.props.id;
+        var id = this.props.info.id;
         this.getProdInfo(id);
     },
+
+    // 真正的网络请求
     getProdInfo: function (id) {
         ajax({
             url: this.state.infoUrl,
             data: {
                 id: id
             },
-            success: this.renderInfo
+            success: this.renderInfo,
+            error: function () {}
         });
     },
     renderInfo: function (data) {
@@ -64,9 +95,9 @@ var ProdInfo = React.createClass({
     edit: function (e) {
         e.preventDefault();
 
-        this.openProdForm();
+        this.openEditForm();
     },
-    openProdForm: function () {
+    openEditForm: function () {
         var ProdForm = require('../prodForm/prodForm');
         var currentProduct = copy(this.state);
 
@@ -81,10 +112,11 @@ var ProdInfo = React.createClass({
             document.getElementById('extraContainer')
         );
     },
-    resetInfo: function (info) {
+    resetInfo: function (newInfo) {
         console.log('new info');
-        console.log(info);
-        this.setState(info);
+        this.setState(newInfo);
+
+        this.props.onChange && this.props.onChange(newInfo);
     }
 });
 
