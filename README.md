@@ -36,8 +36,12 @@ add/del/edit page
 
 > **/get_test_list**
 
-get test lists of a page
+get all test lists of a page
 
 > **/save_test**
 
 add/del/edit test
+
+> **/get_steps**
+
+get all steps of a test

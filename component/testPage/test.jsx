@@ -8,10 +8,16 @@ var copy = require('../../lib/copy');
 
 var Test = React.createClass({
     propTypes: {
+        info: React.PropTypes.shape({
+            id: React.PropTypes.number.isRequired
+        }),
+        onDelete: React.PropTypes.func,
         opentTestDetail: React.PropTypes.func
     },
     getInitialState: function () {
-        return {};
+        return {
+            delUrl: '/save_test'
+        };
     },
     render: function () {
         return (
@@ -51,7 +57,36 @@ var Test = React.createClass({
     delTest: function (e) {
         var id = this.props.info.id;
 
+        var Dialog = require('../dialog/dialog');
+
         e.preventDefault();
+
+        React.render(
+            <span></span>,
+            document.getElementById('extraContainer')
+        );
+        React.render(
+            <Dialog onConfirm={this.del}>
+                <p style={{textAlign:'center'}}>删除后此功能点下的所有步骤也将同时删除，确定要删除？</p>
+            </Dialog>,
+            document.getElementById('extraContainer')
+        );
+    },
+    del: function (id) {
+        ajax({
+            url: this.state.delUrl,
+            type: 'post',
+            data: {
+                id: this.props.info.id,
+                type: 'delete'
+            },
+            success: this.onDelete,
+            error: function () {}
+        });
+    },
+    onDelete: function () {
+        var id = this.props.info.id;
+        this.props.onDelete && this.props.onDelete(id);
     },
     viewTest: function (e) {
         var id = this.props.info.id;

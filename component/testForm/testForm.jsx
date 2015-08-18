@@ -79,9 +79,14 @@ var TestForm = React.createClass({
     postData: function (data) {
         ajax({
             url: this.state.saveUrl,
+            type: 'post',
             data: {
                 name: data.name,
-                pageId: this.props.pageId
+                pageId: this.props.pageId,
+
+                // 区分新增还是修改
+                id: this.props.currentTest ? this.props.currentTest.id : null,
+                type: this.props.currentTest ? 'edit' : 'add'
             },
             success: this.onSave,
             error: this.onErr

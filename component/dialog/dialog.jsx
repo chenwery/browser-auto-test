@@ -17,8 +17,6 @@ var Dialog = React.createClass({
 
         var dialogContent;
         var dialogFooter;
-
-        var otherBtns;
         
         // 销毁dialog
         if (this.state.dissmiss) {
@@ -36,18 +34,12 @@ var Dialog = React.createClass({
             );
         }
 
-        if (this.props.otherBtns) {
-            otherBtns = (
-                <button type="button" className="btn btn-primary" onClick={this.confirm}>确定</button>
-            );
-        }
-
         // 自定义对话框内容的时候，footer也需要自定义
         if (!this.props.custom) {
             dialogFooter = (
                 <div className="modal-footer">
-                    <button type="button" className="btn btn-primary" onClick={this.dissmiss}>确定</button>
-                    {otherBtns}
+                    <button type="button" className="btn btn-primary" onClick={this.confirm}>确定</button>
+                    <button type="button" className="btn btn-default" onClick={this.dissmiss}>取消</button>
                 </div>
             );
         }
@@ -88,8 +80,8 @@ var Dialog = React.createClass({
     },
 
     confirm: function () {
-        var hide = this.dissmiss;
-        this.props.onConfirm && this.props.onConfirm.call(null, this.props.children, hide) && this.dissmiss();
+        this.dissmiss();
+        this.props.onConfirm && this.props.onConfirm()
     },
 
     // 销毁
