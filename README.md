@@ -18,7 +18,7 @@ webpack -d -w
 #### http interfaces
 
 
-> /user
+> **/user**
 
 user infomation
 
