@@ -13,7 +13,8 @@ var Product = React.createClass({
         name: React.PropTypes.string,
         open: React.PropTypes.bool,
         toggle: React.PropTypes.func,
-        onChange: React.PropTypes.func
+        onChange: React.PropTypes.func,
+        onDelete: React.PropTypes.func
     },
     getInitialState: function () {
         return {
@@ -115,13 +116,17 @@ var Product = React.createClass({
         React.render(
             <ProdInfo
                 info={info}
-                onChange={this.onChange} />,
+                onChange={this.onChange}
+                onDelete={this.onDelete} />,
             document.querySelector('#index')
         );
     },
 
     onChange: function (newInfo) {
         this.props.onChange && this.props.onChange(newInfo);
+    },
+    onDelete: function (prodId) {
+        this.props.onDelete && this.props.onDelete(prodId);
     }
 });
 

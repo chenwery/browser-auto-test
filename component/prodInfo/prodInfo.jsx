@@ -12,11 +12,13 @@ var ProdInfo = React.createClass({
             description: React.PropTypes.string,
             cookie: React.PropTypes.string
         }),
-        onChange: React.PropTypes.func
+        onChange: React.PropTypes.func,
+        onDelete: React.PropTypes.func
     },
     getInitialState: function () {
         return {
             infoUrl: '/get_prod_info',
+            delUrl: '/save_product'
         };
     },
     render: function () {
@@ -28,6 +30,7 @@ var ProdInfo = React.createClass({
             <div className="product-info">
                 <h2 className="page-header">
                     <span>{name}</span>
+                    <button className="btn btn-default pull-right" onClick={this.openDelDialog}>删除</button>
                     <button className="btn btn-primary pull-right" onClick={this.edit}>编辑</button>
                 </h2>
 
@@ -117,6 +120,41 @@ var ProdInfo = React.createClass({
         this.setState(newInfo);
 
         this.props.onChange && this.props.onChange(newInfo);
+    },
+    openDelDialog: function (e) {
+        var Dialog = require('../dialog/dialog');
+
+        e.preventDefault();
+
+        React.render(
+            <span></span>,
+            document.getElementById('extraContainer')
+        );
+        React.render(
+            <Dialog onConfirm={this.del}>
+                <p style={{textAlign: 'center'}}>确定要删除此产品？</p>
+            </Dialog>,
+            document.getElementById('extraContainer')
+        );
+    },
+    del: function () {
+        var id = this.props.info.id;
+        this.deleteProd(id);
+    },
+    deleteProd: function (id) {
+        ajax({
+            url: this.state.delUrl,
+            type: 'post',
+            data: {
+                id: id,
+                type: 'delete'
+            },
+            success: this.onDelete,
+            error: function () {}
+        });
+    },
+    onDelete: function () {
+        this.props.onDelete && this.props.onDelete(this.props.info.id);
     }
 });
 

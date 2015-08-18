@@ -24,6 +24,7 @@ var Catelog = React.createClass({
     render: function () {
         var toggleProd = this.toggleProd;
         var changeProd = this.changeProd;
+        var deleteProd = this.deleteProd;
         
         var list = this.state.catelogList || [];
         var prodList = [];
@@ -35,6 +36,7 @@ var Catelog = React.createClass({
                     {...product}
                     toggle={toggleProd}
                     onChange={changeProd}
+                    onDelete={deleteProd}
                     key={index} />
             );
         });
@@ -126,6 +128,29 @@ var Catelog = React.createClass({
         this.setState({
             catelogList: list
         });
+    },
+
+    deleteProd: function (prodId) {
+        var list = copy(this.state.catelogList);
+        var index;
+        list.map(function (product, i) {
+            if (product.id === prodId) {
+                index = i;
+            }
+        });
+
+        if (typeof index !== 'undefined') {
+            list.splice(index, 1);
+
+            this.setState({
+                catelogList: list
+            });
+
+            React.render(
+                <h2 className="page-header">前端自动化测试</h2>,
+                document.querySelector('#index')
+            );
+        }
     }
 });
 

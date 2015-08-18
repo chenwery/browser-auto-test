@@ -51,7 +51,7 @@ var TestPage = React.createClass({
                         <button className="btn btn-primary" onClick={this.addTest}>添加功能点</button>
                     </section>
                     
-                    <TestList testList={testList} opentTestDetail={this.showSteps} />
+                    <TestList testList={testList} opentTestDetail={this.showSteps} onDelete={this.delTest} />
                 
                 </div>
 
@@ -115,6 +115,25 @@ var TestPage = React.createClass({
                 onSave={this.renderNewTest} />,
             document.getElementById('extraContainer')
         );
+    },
+    delTest: function (testId) {
+        var list = copy(this.state.testList) || [];
+        var index;
+
+        list.map(function (test, i) {
+            console.log(test, i, testId);
+            if (test.id === testId) {
+                index = i;
+            }
+        });
+
+        if (typeof index !== 'undefined') {
+            list.splice(index, 1);
+
+            this.setState({
+                testList: list
+            });
+        }
     },
     renderNewTest: function (newTest) {
         console.log('new test');

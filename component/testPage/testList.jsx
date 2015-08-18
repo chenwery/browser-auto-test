@@ -11,7 +11,8 @@ var Test = require('./test');
 var TestList = React.createClass({
     propTypes: {
         testList: React.PropTypes.array,
-        opentTestDetail: React.PropTypes.func
+        opentTestDetail: React.PropTypes.func,
+        onDelete: React.PropTypes.func
     },
     getInitialState: function () {
         return {
@@ -21,10 +22,16 @@ var TestList = React.createClass({
         var list = this.props.testList || [];
         var testList = [];
         var opentTestDetail = this.props.opentTestDetail;
+        var del = this.props.onDelete;
         
         list.forEach(function (test, index) {
             testList.push(
-                <Test key={index} index={index} info={test} opentTestDetail={opentTestDetail} />
+                <Test
+                    key={index}
+                    index={index}
+                    info={test}
+                    opentTestDetail={opentTestDetail}
+                    onDelete={del} />
             );
         });
 

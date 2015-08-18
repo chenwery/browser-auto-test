@@ -32,7 +32,7 @@ var Test = React.createClass({
                 </td>
                 <td>   
                     <a className="glyphicon edit-btn" title="编辑" onClick={this.openTestDetail}></a>
-                    <a className="glyphicon del-btn" title="删除" onClick={this.delTest}></a>
+                    <a className="glyphicon del-btn" title="删除" onClick={this.showDelDialog}></a>
                     <a className="glyphicon run-btn" title="运行" onClick={this.runTest}></a>
                     <a className="glyphicon view-btn" title="查看结果" onClick={this.viewTest}></a>
                 </td>
@@ -54,7 +54,7 @@ var Test = React.createClass({
 
         e.preventDefault();
     },
-    delTest: function (e) {
+    showDelDialog: function (e) {
         var id = this.props.info.id;
 
         var Dialog = require('../dialog/dialog');
@@ -66,13 +66,13 @@ var Test = React.createClass({
             document.getElementById('extraContainer')
         );
         React.render(
-            <Dialog onConfirm={this.del}>
+            <Dialog onConfirm={this.delTest}>
                 <p style={{textAlign:'center'}}>删除后此功能点下的所有步骤也将同时删除，确定要删除？</p>
             </Dialog>,
             document.getElementById('extraContainer')
         );
     },
-    del: function (id) {
+    delTest: function () {
         ajax({
             url: this.state.delUrl,
             type: 'post',
