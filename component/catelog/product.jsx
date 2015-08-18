@@ -111,7 +111,7 @@ var Product = React.createClass({
             description: this.props.description,
             cookie: this.props.cookie
         };
-        
+
         React.render(
             <ProdInfo
                 info={info}

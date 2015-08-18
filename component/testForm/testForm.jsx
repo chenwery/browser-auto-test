@@ -11,7 +11,7 @@ var TestForm = React.createClass({
     },
     getInitialState: function () {
         return {
-            saveUrl: '/add_test',
+            saveUrl: '/save_test',
             fadeOut: false,
             name: '',
             nameErr: false
@@ -96,7 +96,6 @@ var TestForm = React.createClass({
         this.fadeOut();
     },
     onErr: function () {
-        
     },
     fadeOut: function () {
         this.setState({
