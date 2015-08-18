@@ -4,9 +4,7 @@ var PageHeader = React.createClass({
     propTypes: {
         prodName: React.PropTypes.string.isRequired,
         pageName: React.PropTypes.string.isRequired,
-        testName: React.PropTypes.string,
-        showAddBtn: React.PropTypes.bool,
-        onAddClick: React.PropTypes.func
+        testName: React.PropTypes.string
     },
     getInitialState: function () {
         return {};
@@ -29,7 +27,6 @@ var PageHeader = React.createClass({
                         <span> &gt; {this.props.pageName}</span>
                         {testName}
                     </section>
-                    <button className={"btn btn-primary pull-right" + addBtnStatus} onClick={this.props.onAddClick}>添加功能点</button>
                 </h2>
             </div>
         );

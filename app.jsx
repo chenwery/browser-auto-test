@@ -9,8 +9,8 @@ var PageContent = require('./component/pageContent/pageContent');
 var Index = React.createClass({
     getInitialState: function () {
         return {
-            getCatelogsUrl: '/get_catelogs',
-            addCatelogUrl: '/add_catelog'
+            getProdsUrl: '/get_products',
+            catelogList: []
         };
     },
     render: function () {
@@ -18,7 +18,8 @@ var Index = React.createClass({
             <Page>
                 <Catelog
                     catelogList={this.state.catelogList}
-                    addHandler={this.addCatelog} />
+                    onAdd={this.addProd} />
+                
                 <PageContent>
                     <div id="index">
                     </div>
@@ -36,44 +37,19 @@ var Index = React.createClass({
     getCatelogList: function () {
         var self = this;
         ajax({
-            url: this.state.getCatelogsUrl,
-            success: function (list) {
-                self.listLoaded(list);
-            }
+            url: this.state.getProdsUrl,
+            success: this.listLoaded,
+            error: function () {}
         });
     },
     listLoaded: function (data) {
         this.setState({
-            catelogList: data
+            catelogList: data.list
         });
     },
-    addCatelog: function (form) {
-        if (form.name && form.description) {
-            console.log('add catelog');
-            this.setState({
-                cnameCache: form.name
-            });
-            ajax({
-                url: this.state.addCatelogUrl,
-                type: 'post',
-                data: form,
-                success: this.afterAddCatelog
-            });
-        }
-    },
-    afterAddCatelog: function (data) {
-        var list;
-
-        if (!data.id) {
-            console.log('add fail');
-        }
-        
-        list = copy(this.state.catelogList);
-        list.push({
-            name: this.state.cnameCache,
-            id: data.id
-        });
-        
+    addProd: function (newProd) {
+        var list = copy(this.state.catelogList);
+        list.push(newProd);
         this.setState({
             catelogList: list
         });

@@ -1,0 +1,35 @@
+{
+    "list": [
+        {
+            "name": "QQ群活动",
+            "id": 123453434,
+            "pages": [
+                {
+                    "name": "首页",
+                    "id": 97642344,
+                    "url": "http://qqweb.qq.com/qunactivity/index.html?groupUin=315921130"
+                }
+            ]
+        },
+        {
+            "name": "家校群",
+            "id": 4343534
+        },
+        {
+            "name": "手Q群活动",
+            "id": 9654576565,
+            "pages": [
+                {
+                    "name": "详情页",
+                    "id": 97642344,
+                    "url": "http://qqweb.qq.com/qunactivity/index.html?groupUin=315921130"
+                },
+                {
+                    "name": "创建页",
+                    "id": 63454565467,
+                    "url": "http://qqweb.qq.com/qunactivity/index.html?groupUin=315921130"
+                }
+            ]
+        }
+    ]
+}

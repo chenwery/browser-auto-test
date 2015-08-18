@@ -40,6 +40,7 @@ var Step = React.createClass({
                 </td>
                 <td>
                     <a className="glyphicon edit-btn" onClick={this.edit}></a>
+                    <a className="glyphicon del-btn" onClick={this.del}></a>
                 </td>
             </tr>
         );
@@ -79,6 +80,9 @@ var Step = React.createClass({
                 inputValue: newStep.inputValue
             }
         });
+    },
+    del: function (e) {
+        e.preventDefault();
     }
 });
 

@@ -57,11 +57,11 @@ var PageList = React.createClass({
         React.render(
             <PageForm
                 prodId={this.props.prodId}
-                onSave={this.addPage} />,
+                onSave={this.onAdd} />,
             document.querySelector('#index')
         );
     },
-    addPage: function (newPage) {
+    onAdd: function (newPage) {
         this.props.onAdd(newPage);
     }
 });

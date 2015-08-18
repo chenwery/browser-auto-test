@@ -29,22 +29,20 @@ var StepList = React.createClass({
         }
         
         return (
-            <form>
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>描述</th>
-                            <th>目标元素</th>
-                            <th>动作</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {testList}
-                    </tbody>
-                </table>
-            </form>
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>描述</th>
+                        <th>目标元素</th>
+                        <th>动作</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {testList}
+                </tbody>
+            </table>
         );
     },
     componentDidMount: function () {}

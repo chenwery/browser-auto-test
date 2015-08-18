@@ -25,8 +25,10 @@ var Test = React.createClass({
                     </a>
                 </td>
                 <td>   
-                    <a className="glyphicon edit-btn" onClick={this.openTestDetail}></a>
-                    <a className="glyphicon run-btn" onClick={this.runTest}></a>
+                    <a className="glyphicon edit-btn" title="编辑" onClick={this.openTestDetail}></a>
+                    <a className="glyphicon del-btn" title="删除" onClick={this.delTest}></a>
+                    <a className="glyphicon run-btn" title="运行" onClick={this.runTest}></a>
+                    <a className="glyphicon view-btn" title="查看结果" onClick={this.viewTest}></a>
                 </td>
             </tr>
         );
@@ -41,8 +43,20 @@ var Test = React.createClass({
 
         opentTestDetail && opentTestDetail.call(null, id, name);
     },
-    runTest: function () {
+    runTest: function (e) {
         var id = this.props.info.id;
+
+        e.preventDefault();
+    },
+    delTest: function (e) {
+        var id = this.props.info.id;
+
+        e.preventDefault();
+    },
+    viewTest: function (e) {
+        var id = this.props.info.id;
+        
+        e.preventDefault();
     }
 });
 

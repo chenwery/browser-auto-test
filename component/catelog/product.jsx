@@ -16,7 +16,6 @@ var Product = React.createClass({
     },
     getInitialState: function () {
         return {
-            infoUrl: '/get_prod_info',
             pages: this.props.pages,
             open: false
         };
@@ -38,23 +37,31 @@ var Product = React.createClass({
                     prodId={prodId}
                     prodName={prodName}
                     toggleActive={this.toggleActive}
-                    onAdd={this.addPage}/>
+                    onAdd={this.addPage} />
             </li>
         );
+    },
+
+    // 展开产品线时父级会改变open属性，从而会设置其他产品线为收起
+    componentWillReceiveProps: function (newProps) {
+        this.setState({
+            open: newProps.open,
+            pages: newProps.pages
+        });
     },
     openProd: function () {
         var prodId = this.props.id;
         var toggleProduct = this.props.toggle;
         
-        this.getProdInfo(prodId);
+        this.toggleOpen();
         
-        toggleProduct && toggleProduct.call();
-        
-        this.toggleSub();
+        toggleProduct && toggleProduct.call(null, prodId);
+
+        this.showProdInfo();
     },
 
     // 展开收起
-    toggleSub: function () {
+    toggleOpen: function () {
         this.setState({
             open: !this.state.open
         });
@@ -103,19 +110,15 @@ var Product = React.createClass({
         );
     },
 
-    getProdInfo: function (prodId) {
-        ajax({
-            url: this.state.infoUrl,
-            data: {
-                id: prodId
-            },
-            success: this.renderInfo
-        });
-    },
-
-    renderInfo: function (data) {
-        console.log('prod info');
-        console.log(data);
+    showProdInfo: function (prodId) {
+        var ProdInfo = require('../prodInfo/prodInfo');
+        
+        React.render(
+            <ProdInfo
+                name={this.props.name}
+                id={this.props.id} />,
+            document.querySelector('#index')
+        );
     }
 });
 

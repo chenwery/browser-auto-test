@@ -14,14 +14,17 @@ var PageForm = React.createClass({
     },
     getInitialState: function () {
         return {
-            saveUrl: '/add_page',
+            saveUrl: '/save_page',
             name: '',
             url: '',
             nameErr: false,
-            urlErr: false
+            urlErr: false,
+            rendered: 0
         };
     },
     render: function () {
+        var type = this.props.currentPage ? '修改' : '新增';
+
         var pageName = this.state.name;
         var nameErr = this.state.nameErr ? ' has-error' : '';
         var pageUrl = this.state.url;
@@ -29,7 +32,7 @@ var PageForm = React.createClass({
 
         return (
             <div className="page-form">
-                <h2 className="page-header">填写页面信息</h2>
+                <h2 className="page-header">{type}页面</h2>
                     <form className="form-horizontal col-md-10">
                         <div className={"form-group" + nameErr}>
                             <label className="col-sm-2 control-label" htmlFor="pageName">页面名称</label>
@@ -110,7 +113,15 @@ var PageForm = React.createClass({
         ajax({
             url: this.state.saveUrl,
             type: 'post',
-            data: data,
+            data: {
+                name: data.name,
+                url: data.url,
+                prod: this.props.prodId,
+
+                // 区分新增/修改
+                id: this.props.currentPage ? this.props.currentPage.id : null,
+                type: this.props.currentPage ? 'edit' : 'add'
+            },
             success: this.onSave,
             error: this.onErr
         });
@@ -124,7 +135,7 @@ var PageForm = React.createClass({
     },
 
     onErr: function () {
-        /*var Dialog = require('../dialog/dialog');
+        var Dialog = require('../dialog/dialog');
         React.render(
             <span></span>,
             document.getElementById('extraContainer')
@@ -132,7 +143,7 @@ var PageForm = React.createClass({
         React.render(
             <Dialog>添加失败，请稍后重试</Dialog>,
             document.getElementById('extraContainer')
-        );*/
+        );
     }
 });
 

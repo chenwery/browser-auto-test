@@ -1,6 +1,7 @@
 .hierarchy {
     display: inline-block;
 }
+
 .edit-btn:before {
     content: "\270f";
 }
@@ -9,8 +10,18 @@
     content: "\e029";
 }
 
+.view-btn:before {
+    content: "\e022";
+}
+
+.del-btn:before {
+    content: "\e020";
+}
+
 .edit-btn,
-.run-btn {
+.run-btn,
+.view-btn,
+.del-btn {
     margin: 0 20px 0 0;
 
     font-size: 16px;
@@ -23,10 +34,12 @@
 }
 
 table.test-list {
-    th:first-child {
+    th:first-child,
+    td:first-child {
         width: 100px;
     }
-    th:last-child {
+    th:last-child,
+    td:last-child {
         width: 250px;
     }
 }

@@ -19,7 +19,7 @@ var TestPage = React.createClass({
     },
     getInitialState: function () {
         return {
-            detailUrl: '/get_page_detail',
+            detailUrl: '/get_test_list',
             testList: [],
             show: 'list',
             testName: null
@@ -41,12 +41,18 @@ var TestPage = React.createClass({
                 <PageHeader
                     prodName={prodName}
                     pageName={pageName}
-                    testName={testName}
-                    showAddBtn={this.state.show === 'list'}
-                    onAddClick={this.addTest} />
-
+                    testName={testName} />
+                
+                
+                
                 <div className="test-list-container" style={{display: displayTestList}} ref="list">
+                    
+                    <section className="operation-area">
+                        <button className="btn btn-primary" onClick={this.addTest}>添加功能点</button>
+                    </section>
+                    
                     <TestList testList={testList} opentTestDetail={this.showSteps} />
+                
                 </div>
 
                 <div className="test-steps-container" style={{display: displayTestSteps}} ref="steps">
@@ -95,10 +101,14 @@ var TestPage = React.createClass({
     addTest: function (e) {
         console.log('add test');
         var TestForm = require('../testForm/testForm');
+
+        e.preventDefault();
+        
         React.render(
             <span></span>,
             document.getElementById('extraContainer')
         );
+        
         React.render(
             <TestForm
                 pageId={this.props.pageId}
