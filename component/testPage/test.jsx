@@ -12,7 +12,8 @@ var Test = React.createClass({
             id: React.PropTypes.number.isRequired
         }),
         onDelete: React.PropTypes.func,
-        opentTestDetail: React.PropTypes.func
+        opentTestDetail: React.PropTypes.func,
+        onRun: React.PropTypes.func
     },
     getInitialState: function () {
         return {
@@ -51,8 +52,11 @@ var Test = React.createClass({
     },
     runTest: function (e) {
         var id = this.props.info.id;
+        var name = this.props.info.name;
 
         e.preventDefault();
+
+        this.props.onRun && this.props.onRun(id, name);
     },
     showDelDialog: function (e) {
         var id = this.props.info.id;

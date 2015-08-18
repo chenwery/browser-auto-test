@@ -32,6 +32,7 @@ var TestPage = React.createClass({
 
         var displayTestList = this.state.show === 'list' ? 'block' : 'none';
         var displayTestSteps = this.state.show === 'steps' ? 'block' : 'none';
+        var displayTestResult = this.state.show === 'result' ? 'block' : 'none';
 
         var testList = this.state.testList;
 
@@ -43,19 +44,24 @@ var TestPage = React.createClass({
                     pageName={pageName}
                     testName={testName} />
                 
-                
-                
                 <div className="test-list-container" style={{display: displayTestList}} ref="list">
                     
                     <section className="operation-area">
                         <button className="btn btn-primary" onClick={this.addTest}>添加功能点</button>
                     </section>
                     
-                    <TestList testList={testList} opentTestDetail={this.showSteps} onDelete={this.delTest} />
+                    <TestList
+                        testList={testList}
+                        opentTestDetail={this.showSteps}
+                        onDelete={this.delTest}
+                        onRun={this.runTest} />
                 
                 </div>
 
                 <div className="test-steps-container" style={{display: displayTestSteps}} ref="steps">
+                </div>
+
+                <div className="test-result-container" style={{display: displayTestResult}} ref="result">
                 </div>
             </div>
         );
@@ -161,6 +167,21 @@ var TestPage = React.createClass({
             show: 'list',
             testName: null
         });
+    },
+    runTest: function (id, testName) {
+        this.setState({
+            show: 'result',
+            testName: testName
+        });
+        this.showResult(id, testName);
+    },
+    showResult: function (id, testName) {
+        var TestResult = require('../testResult/testResult');
+        
+        React.render(
+            <TestResult testId={id} testName={testName} onReturn={this.showList}></TestResult>,
+            this.refs.result.getDOMNode()
+        );
     }
 
 });

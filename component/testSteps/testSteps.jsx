@@ -55,7 +55,7 @@ var TestSteps = React.createClass({
     return: function (e) {
         e && e.preventDefault();
 
-        this.props.onReturn.call();
+        this.props.onReturn && this.props.onReturn();
     },
     addStep: function (e) {
         var StepForm = require('../stepForm/stepForm');
