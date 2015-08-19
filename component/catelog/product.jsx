@@ -20,14 +20,12 @@ var Product = React.createClass({
     },
     getInitialState: function () {
         return {
-            getPagesUrl: '/get_pages',
-            pages: this.props.pages,
-            open: false
+            getPagesUrl: '/get_pages'
         };
     },
     render: function () {
-        var state = this.state.open ? 'open' : '';
-        var pages = this.state.pages || [];
+        var state = this.props.open ? 'open' : '';
+        var pages = this.props.pages || [];
         var prodName = this.props.name;
         var prodId = this.props.id;
         
@@ -47,14 +45,6 @@ var Product = React.createClass({
         );
     },
 
-    // 展开产品线时父级会改变open属性，从而会设置其他产品线为收起
-    componentWillReceiveProps: function (newProps) {
-        console.log('change prod');
-        this.setState({
-            open: newProps.open,
-            pages: newProps.pages
-        });
-    },
     openProd: function () {
         var prodId = this.props.id;
         
@@ -63,7 +53,7 @@ var Product = React.createClass({
 
         // 渲染产品线详细信息，获取产品线下面的页面
         this.showProdInfo();
-        (!this.state.pages || !this.state.pages.length) && this.showPages();
+        (!this.props.pages || !this.props.pages.length) && this.showPages();
     },
 
     // 切换页面active状态
