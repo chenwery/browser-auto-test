@@ -15,10 +15,12 @@ var Product = React.createClass({
         toggle: React.PropTypes.func,
         onChange: React.PropTypes.func,
         onDelete: React.PropTypes.func,
-        onAddPage: React.PropTypes.func
+        onAddPage: React.PropTypes.func,
+        onPagesReceive: React.PropTypes.func
     },
     getInitialState: function () {
         return {
+            getPagesUrl: '/get_pages',
             pages: this.props.pages,
             open: false
         };
@@ -59,7 +61,9 @@ var Product = React.createClass({
         // 通过父级修改open属性来切换各个产品线的展开收起状态
         this.props.toggle && this.props.toggle(prodId);
 
+        // 渲染产品线详细信息，获取产品线下面的页面
         this.showProdInfo();
+        (!this.state.pages || !this.state.pages.length) && this.showPages();
     },
 
     // 切换页面active状态
@@ -116,6 +120,27 @@ var Product = React.createClass({
                 onDelete={this.onDelete} />,
             document.querySelector('#index')
         );
+    },
+
+    showPages: function () {
+        var id = this.props.id;
+        this.getPages(id);
+    },
+    getPages: function (prodId) {
+        ajax({
+            url: this.state.getPagesUrl,
+            data: {
+                product_id: prodId
+            },
+            success: this.renderPages,
+            error: function () {}
+        });
+    },
+    renderPages: function (data) {
+        var pages = copy(data.list);
+
+        // 获取到产品线下的页面后，回传给上级维护
+        this.props.onPagesReceive && this.props.onPagesReceive(this.props.id, pages);
     },
 
     onChange: function (newInfo) {

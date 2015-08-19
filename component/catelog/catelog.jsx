@@ -27,6 +27,7 @@ var Catelog = React.createClass({
         var deleteProd = this.deleteProd;
         var addPage = this.addPage;
         var togglePage = this.togglePage;
+        var receivePages = this.receivePages;
         
         var list = this.state.catelogList || [];
         var prodList = [];
@@ -41,6 +42,7 @@ var Catelog = React.createClass({
                     onDelete={deleteProd}
                     onAddPage={addPage}
                     togglePage={togglePage}
+                    onPagesReceive={receivePages}
                     key={index} />
             );
         });
@@ -186,6 +188,21 @@ var Catelog = React.createClass({
                 product.pages.map(function (page) {
                     page.active = page.id === pageId;
                 });
+            }
+        });
+
+        this.setState({
+            catelogList: list
+        });
+    },
+
+    receivePages: function (prodId, pages) {
+        var list = copy(this.state.catelogList);
+        list.map(function (product) {
+            if (product.id === prodId) {
+                if (!product.pages) {
+                    product.pages = pages;
+                }
             }
         });
 
