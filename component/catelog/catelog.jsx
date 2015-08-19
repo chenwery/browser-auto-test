@@ -25,6 +25,8 @@ var Catelog = React.createClass({
         var toggleProd = this.toggleProd;
         var changeProd = this.changeProd;
         var deleteProd = this.deleteProd;
+        var addPage = this.addPage;
+        var togglePage = this.togglePage;
         
         var list = this.state.catelogList || [];
         var prodList = [];
@@ -37,6 +39,8 @@ var Catelog = React.createClass({
                     toggle={toggleProd}
                     onChange={changeProd}
                     onDelete={deleteProd}
+                    onAddPage={addPage}
+                    togglePage={togglePage}
                     key={index} />
             );
         });
@@ -64,8 +68,14 @@ var Catelog = React.createClass({
         });
     },
     renderProdList: function (data) {
+
+        // 把后台的product_id/product_name转换为id/name
+        var list = JSON.stringify(data.list);
+        list = list.replace(/\"product_id\"/g, '\"id\"').replace(/\"product_name\"/g, '\"name\"');
+        list = JSON.parse(list);
+        
         this.setState({
-            catelogList: data.list
+            catelogList: list
         });
     },
     openAddDialog: function () {
@@ -151,6 +161,37 @@ var Catelog = React.createClass({
                 document.querySelector('#index')
             );
         }
+    },
+    addPage: function (prodId, newPage) {
+        var list = copy(this.state.catelogList);
+        list.map(function (product) {
+            if (product.id === prodId) {
+                if (!product.pages) {
+                    product.pages = [];
+                }
+                product.pages.push(newPage);
+            }
+        });
+
+        this.setState({
+            catelogList: list
+        });
+    },
+
+    // 切换页面active
+    togglePage: function (prodId, pageId) {
+        var list = copy(this.state.catelogList);
+        list.map(function (product) {
+            if (product.id === prodId) {
+                product.pages.map(function (page) {
+                    page.active = page.id === pageId;
+                });
+            }
+        });
+
+        this.setState({
+            catelogList: list
+        });
     }
 });
 

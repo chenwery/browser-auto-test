@@ -14,7 +14,8 @@ var Product = React.createClass({
         open: React.PropTypes.bool,
         toggle: React.PropTypes.func,
         onChange: React.PropTypes.func,
-        onDelete: React.PropTypes.func
+        onDelete: React.PropTypes.func,
+        onAddPage: React.PropTypes.func
     },
     getInitialState: function () {
         return {
@@ -63,15 +64,7 @@ var Product = React.createClass({
 
     // 切换页面active状态
     toggleActive: function (pageId) {
-        var list = copy(this.state.pages);
-
-        list.forEach(function (page) {
-            page.active = page.id === pageId;
-        });
-
-        this.setState({
-            pages: list
-        });
+        this.props.togglePage(this.props.id, pageId);
     },
 
     addPage: function (newPage) {
@@ -83,6 +76,9 @@ var Product = React.createClass({
             pages: list
         });
 
+        this.props.onAddPage && this.props.onAddPage(this.props.id, newPage);
+
+        // 新增页面时页面active
         this.toggleActive(newPage.id);
 
         this.renderNewPageDetail(newPage);

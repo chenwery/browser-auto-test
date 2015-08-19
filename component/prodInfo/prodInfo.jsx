@@ -41,41 +41,19 @@ var ProdInfo = React.createClass({
             </div>
         );
     },
+
+    // 把父级传入的info同步到当前state中
     componentDidMount: function () {
-        if (this.props.info.description) {
-
-            // 包含description说明传入了具体信息
-            // 已经传入了具体信息info，则第一次渲染之后把传入的info同步到当前state
-            this.setState(this.props.info);
-        } else {
-
-            // 否则，网络拉取产品信息
-            this.showProdInfo();
-        }
+        this.setState(this.props.info);
     },
 
     // 切换产品时会传入新的info,需要同步到当前state中
     componentWillReceiveProps: function (newProps) {
-        if (newProps.info.description) {
-
-            // 已经传入了具体信息info，则第一次渲染之后把传入的info同步到当前state
-            this.setState(newProps.info);
-        } else {
-
-            // 否则，网络拉取产品信息
-            this.showProdInfo();
-        }
+        this.setState(newProps.info);
     },
 
-    // 切换产品(更新)时重新拉取新的产品信息
-    componentDidUpdate: function (oldProps) {
-        if (oldProps.id !== this.props.id) {
-            console.log('open new product');
-            //this.showProdInfo();
-        }
-    },
 
-    // 通过网络获取产品信息
+    /*// 通过网络获取产品信息
     showProdInfo: function () {
         var id = this.props.info.id;
         this.getProdInfo(id);
@@ -94,7 +72,8 @@ var ProdInfo = React.createClass({
     },
     renderInfo: function (data) {
         this.setState(data);
-    },
+    },*/
+
     edit: function (e) {
         e.preventDefault();
 

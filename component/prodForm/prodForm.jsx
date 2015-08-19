@@ -102,8 +102,8 @@ var ProdForm = React.createClass({
         if (currentProduct) {
             this.setState({
                 name: currentProduct.name,
-                description: currentProduct.description,
-                cookie: currentProduct.cookie,
+                description: currentProduct.description || '',
+                cookie: currentProduct.cookie || '',
                 rendered: this.state.rendered + 1
             });
         }
