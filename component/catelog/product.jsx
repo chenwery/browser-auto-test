@@ -27,7 +27,7 @@ var Product = React.createClass({
     },
     render: function () {
         var state = this.state.open ? 'open' : '';
-        var pages = this.state.pages;
+        var pages = this.state.pages || [];
         var prodName = this.props.name;
         var prodId = this.props.id;
         
@@ -68,19 +68,13 @@ var Product = React.createClass({
 
     // 切换页面active状态
     toggleActive: function (pageId) {
-        this.props.togglePage(this.props.id, pageId);
+        var prodId = this.props.id;
+        this.props.togglePage(prodId, pageId);
     },
 
     addPage: function (newPage) {
-        var list = copy(this.state.pages) || [];
-
-        list.push(newPage);
-
-        this.setState({
-            pages: list
-        });
-
-        this.props.onAddPage && this.props.onAddPage(this.props.id, newPage);
+        var prodId = this.props.id;
+        this.props.onAddPage && this.props.onAddPage(prodId, newPage);
 
         // 新增页面时页面active
         this.toggleActive(newPage.id);
