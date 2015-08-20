@@ -17,8 +17,12 @@ var PageForm = React.createClass({
             saveUrl: '/save_page',
             name: '',
             url: '',
+            description: '',
+            cookie: '',
             nameErr: false,
             urlErr: false,
+            descErr: false,
+            cookieErr: false,
             rendered: 0
         };
     },
@@ -27,8 +31,15 @@ var PageForm = React.createClass({
 
         var pageName = this.state.name;
         var nameErr = this.state.nameErr ? ' has-error' : '';
+        
         var pageUrl = this.state.url;
         var urlErr = this.state.urlErr ? ' has-error' : '';
+        
+        var description = this.state.description;
+        var descErr = this.state.descErr ? ' has-error' : '';
+
+        var cookie = this.state.cookie;
+        var cookieErr = this.state.cookieErr ? ' has-error' : '';
 
         return (
             <div className="page-form">
@@ -63,7 +74,35 @@ var PageForm = React.createClass({
                                     onChange={this.setUrl} />
                             </div>
                         </div>
+                        
+                        <div className={"form-group" + descErr}>
+                            <label className="col-sm-2 control-label" htmlFor="description">描述</label>
+                            <div className="col-sm-10">
+                                <input
+                                    id="description"
+                                    name="description"
+                                    type="text"
+                                    className="form-control"
+                                    tabIndex="3"
+                                    value={description}
+                                    onChange={this.setDesc} />
+                            </div>
+                        </div>
 
+                        <div className={"form-group" + cookieErr}>
+                            <label className="col-sm-2 control-label" htmlFor="cookie">cookie</label>
+                            <div className="col-sm-10">
+                                <input
+                                    id="cookie"
+                                    name="cookie"
+                                    type="text"
+                                    className="form-control"
+                                    tabIndex="4"
+                                    value={cookie}
+                                    onChange={this.setCookie} />
+                            </div>
+                        </div>
+                        
                         <div className="form-group">
                             <div className="col-sm-offset-2 col-sm-10">
                                 <button type="submit" className="btn btn-primary" onClick={this.save}>确定</button>
@@ -75,12 +114,29 @@ var PageForm = React.createClass({
         );
     },
     componentDidMount: function () {},
+
+    // 名称必填
     setName: function (e) {
         this.setState({
             name: e.target.value,
             nameErr: !e.target.value
         });
     },
+
+    // 描述为选填
+    setDesc: function (e) {
+        this.setState({
+            description: e.target.value
+        });
+    },
+    // cookie为选填
+    setCookie: function (e) {
+        this.setState({
+            cookie: e.target.value
+        });
+    },
+
+    // URL为必填
     setUrl: function (e) {
         this.setState({
             url: e.target.value,
@@ -91,6 +147,8 @@ var PageForm = React.createClass({
         var self = this;
         var name = this.state.name.trim();
         var url = this.state.url.trim();
+        var description = this.state.description.trim();
+        var cookie = this.state.cookie.trim();
         
         e.preventDefault();
 
@@ -106,7 +164,9 @@ var PageForm = React.createClass({
         this.postData({
             name: name,
             url: url,
-            id: this.props.prodId
+            description: description,
+            cookie: cookie,
+            prodId: this.props.prodId
         });
     },
     postData: function (data) {
@@ -116,7 +176,9 @@ var PageForm = React.createClass({
             data: {
                 name: data.name,
                 url: data.url,
-                prod: this.props.prodId,
+                description: data.description,
+                cookie: data.cookie,
+                product_id: data.prodId,
 
                 // 区分新增/修改
                 id: this.props.currentPage ? this.props.currentPage.id : null,
@@ -130,7 +192,9 @@ var PageForm = React.createClass({
         this.props.onSave({
             name: this.state.name.trim(),
             url: this.state.url.trim(),
-            id: newPage.id
+            description: this.state.description.trim(),
+            cookie: this.state.cookie.trim(),
+            id: this.props.currentPage ? this.props.currentPage.id : newPage.id
         });
     },
 
