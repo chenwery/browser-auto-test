@@ -17,7 +17,7 @@ var Catelog = React.createClass({
     },
     getInitialState: function () {
         return {
-            getProdsUrl: '/get_products',
+            getProdsUrl: '/autotest/api/userHadProductLine/get',
             catelogList: []
         };
     },

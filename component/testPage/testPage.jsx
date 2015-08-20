@@ -19,7 +19,7 @@ var TestPage = React.createClass({
     },
     getInitialState: function () {
         return {
-            detailUrl: '/get_features',
+            detailUrl: '/autotest/api/pageHadFun/get',
             testList: [],
             show: 'list',
             testName: null,

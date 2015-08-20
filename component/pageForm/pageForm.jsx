@@ -14,7 +14,7 @@ var PageForm = React.createClass({
     },
     getInitialState: function () {
         return {
-            saveUrl: '/save_page',
+            saveUrl: '/autotest/api/productLineHadPage/create',
             name: '',
             url: '',
             description: '',

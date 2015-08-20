@@ -10,7 +10,7 @@ var Dialog = require('../dialog/dialog');
 var ProdForm = React.createClass({
     getInitialState: function () {
         return {
-            saveUrl: '/save_product',
+            saveUrl: '/autotest/api/userHadProductLine/create',
             fadeOut: false,
             name: '',
             nameErr: false,
@@ -181,9 +181,10 @@ var ProdForm = React.createClass({
             url: this.state.saveUrl,
             type: 'post',
             data: {
-                name: data.name,
+                product_name: data.name,
                 description: data.description,
                 cookie: data.cookie,
+                email: data.email,
 
                 // 修改时需要传当前id
                 id: this.props.currentProduct ? this.props.currentProduct.id : null,

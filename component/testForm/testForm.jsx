@@ -11,7 +11,7 @@ var TestForm = React.createClass({
     },
     getInitialState: function () {
         return {
-            saveUrl: '/save_feature',
+            saveUrl: '/autotest/api/pageHadFun/create',
             fadeOut: false,
             name: '',
             nameErr: false

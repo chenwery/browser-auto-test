@@ -19,7 +19,7 @@ var ProdInfo = React.createClass({
     getInitialState: function () {
         return {
             infoUrl: '/get_prod_info',
-            delUrl: '/save_product'
+            delUrl: '/autotest/api/userHadProductLine/create'
         };
     },
     render: function () {

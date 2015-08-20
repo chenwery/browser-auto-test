@@ -17,7 +17,7 @@ var StepForm = React.createClass({
     },
     getInitialState: function () {
         return {
-            saveUrl: '/save_step',
+            saveUrl: '/autotest/api/pageHadFun/edit',
             fadeOut: false,
             selector: '',
             selectorErr: false,

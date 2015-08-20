@@ -18,7 +18,8 @@ var Test = React.createClass({
     },
     getInitialState: function () {
         return {
-            delUrl: '/save_feature'
+            delUrl: '/autotest/api/pageHadFun/create',
+            runUrl: '/autotest/api/task/exec'
         };
     },
     render: function () {
@@ -57,7 +58,22 @@ var Test = React.createClass({
 
         e.preventDefault();
 
+        this.triggerTest(id);
+
         this.props.onRun && this.props.onRun(id, name);
+    },
+    triggerTest: function (id) {
+        var self = this;
+        ajax({
+            url: this.state.runUrl,
+            data: {
+                fun_id: id
+            },
+            success: function () {},
+            error: function () {
+                self.triggerTest(id);
+            }
+        });
     },
     showDelDialog: function (e) {
         var id = this.props.info.id;

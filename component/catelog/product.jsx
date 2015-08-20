@@ -20,7 +20,7 @@ var Product = React.createClass({
     },
     getInitialState: function () {
         return {
-            getPagesUrl: '/get_pages'
+            getPagesUrl: '/autotest/api/productLineHadPage/get'
         };
     },
     render: function () {
