@@ -10,7 +10,7 @@ var Dialog = require('../dialog/dialog');
 var ProdForm = React.createClass({
     getInitialState: function () {
         return {
-            addUrlUrl: '/autotest/api/userHadProductLine/create',
+            addUrl: '/autotest/api/userHadProductLine/create',
             editUrl: '/autotest/api/userHadProductLine/create',
             fadeOut: false,
             name: '',
