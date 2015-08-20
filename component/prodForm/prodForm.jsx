@@ -10,7 +10,8 @@ var Dialog = require('../dialog/dialog');
 var ProdForm = React.createClass({
     getInitialState: function () {
         return {
-            saveUrl: '/autotest/api/userHadProductLine/create',
+            addUrlUrl: '/autotest/api/userHadProductLine/create',
+            editUrl: '/autotest/api/userHadProductLine/create',
             fadeOut: false,
             name: '',
             nameErr: false,
@@ -177,8 +178,13 @@ var ProdForm = React.createClass({
         });        
     },
     postData: function (data) {
+
+        // 区分是增加还是修改
+        var type = this.props.currentProduct ? 'edit' : 'add';
+        var url = type === 'add' ? this.state.addUrl : this.state.editUrl;
+
         ajax({
-            url: this.state.saveUrl,
+            url: url,
             type: 'post',
             data: {
                 product_name: data.name,
@@ -188,9 +194,8 @@ var ProdForm = React.createClass({
 
                 // 修改时需要传当前id
                 id: this.props.currentProduct ? this.props.currentProduct.id : null,
-                
-                // 区分是增加还是修改
-                type: this.props.currentProduct ? 'edit' : 'add'
+
+                type: type
             },
             success: this.onSave,
             error: this.onErr

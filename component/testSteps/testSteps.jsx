@@ -57,16 +57,16 @@ var TestSteps = React.createClass({
         React.render(
             <StepForm
                 onSave={this.addStep}
-                featureId={this.props.testId} />,
+                testId={this.props.testId} />,
             document.getElementById('extraContainer')
         );
     },
 
     // 增加测试步骤
     addStep: function (newStep) {
-        var featureId = this.props.testId;
+        var testId = this.props.testId;
         console.log('add new step');
-        this.props.onAdd && this.props.onAdd(featureId, newStep);
+        this.props.onAdd && this.props.onAdd(testId, newStep);
     }
 });
 

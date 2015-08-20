@@ -18,9 +18,11 @@ var PageForm = React.createClass({
             name: '',
             url: '',
             description: '',
+            email: '',
             cookie: '',
             nameErr: false,
             urlErr: false,
+            emailErr: false,
             descErr: false,
             cookieErr: false,
             rendered: 0
@@ -37,6 +39,9 @@ var PageForm = React.createClass({
         
         var description = this.state.description;
         var descErr = this.state.descErr ? ' has-error' : '';
+
+        var email = this.state.email;
+        var emailErr = this.state.emailErr ? ' has-error' : '';
 
         var cookie = this.state.cookie;
         var cookieErr = this.state.cookieErr ? ' has-error' : '';
@@ -74,6 +79,20 @@ var PageForm = React.createClass({
                                     onChange={this.setUrl} />
                             </div>
                         </div>
+
+                        <div className={"form-group" + emailErr}>
+                            <label className="col-sm-2 control-label" htmlFor="email">Email</label>
+                            <div className="col-sm-10">
+                                <input
+                                    id="email"
+                                    name="email"
+                                    type="text"
+                                    className="form-control"
+                                    tabIndex="3"
+                                    value={email}
+                                    onChange={this.setEmail} />
+                            </div>
+                        </div>
                         
                         <div className={"form-group" + descErr}>
                             <label className="col-sm-2 control-label" htmlFor="description">描述</label>
@@ -83,7 +102,7 @@ var PageForm = React.createClass({
                                     name="description"
                                     type="text"
                                     className="form-control"
-                                    tabIndex="3"
+                                    tabIndex="4"
                                     value={description}
                                     onChange={this.setDesc} />
                             </div>
@@ -97,7 +116,7 @@ var PageForm = React.createClass({
                                     name="cookie"
                                     type="text"
                                     className="form-control"
-                                    tabIndex="4"
+                                    tabIndex="5"
                                     value={cookie}
                                     onChange={this.setCookie} />
                             </div>
@@ -120,6 +139,12 @@ var PageForm = React.createClass({
         this.setState({
             name: e.target.value,
             nameErr: !e.target.value
+        });
+    },
+    setEmail: function (e) {
+        this.setState({
+            email: e.target.value,
+            emailErr: !e.target.value
         });
     },
 
@@ -147,6 +172,7 @@ var PageForm = React.createClass({
         var self = this;
         var name = this.state.name.trim();
         var url = this.state.url.trim();
+        var email = this.state.email.trim();
         var description = this.state.description.trim();
         var cookie = this.state.cookie.trim();
         
@@ -154,16 +180,18 @@ var PageForm = React.createClass({
 
         this.setState({
             nameErr: !name,
-            urlErr: !url
+            urlErr: !url,
+            emailErr: !email
         });
 
-        if (!name || !url) {
+        if (!name || !url || !email) {
             return;
         }
 
         this.postData({
             name: name,
             url: url,
+            email: email,
             description: description,
             cookie: cookie,
             prodId: this.props.prodId
@@ -176,6 +204,7 @@ var PageForm = React.createClass({
             data: {
                 name: data.name,
                 url: data.url,
+                email: data.email,
                 description: data.description,
                 cookie: data.cookie,
                 product_id: data.prodId,
@@ -192,6 +221,7 @@ var PageForm = React.createClass({
         this.props.onSave({
             name: this.state.name.trim(),
             url: this.state.url.trim(),
+            email: this.state.email.trim(),
             description: this.state.description.trim(),
             cookie: this.state.cookie.trim(),
             id: this.props.currentPage ? this.props.currentPage.id : newPage.id

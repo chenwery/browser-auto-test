@@ -11,7 +11,7 @@ var Dialog = require('../dialog/dialog');
 
 var StepForm = React.createClass({
     propTypes: {
-        featureId: React.PropTypes.number,
+        testId: React.PropTypes.number,
         onSave: React.PropTypes.func,
         currentStep: React.PropTypes.object
     },
@@ -204,8 +204,8 @@ var StepForm = React.createClass({
             // 类型为新增时，id会是初始值null(即不传id)
             id: id,
 
-            // 新增时需要传当前测试功能点的id（featureId）
-            fun_id: this.props.featureId,
+            // 新增时需要传当前测试功能点的id（testId）
+            fun_id: this.props.testId,
 
             // 类型为“修改”还是“新增”的标记位
             cmd: this.props.currentStep ? 'edit' : 'add',
