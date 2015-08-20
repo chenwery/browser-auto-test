@@ -191,11 +191,15 @@ var StepForm = React.createClass({
             return;
         }
 
-        this.postData({
+        var step = JSON.stringify([{
             description: description,
             selector: selector,
             operation: operation,
-            inputValue: inputValue,
+            inputValue: inputValue
+        }]);
+
+        this.postData({
+            selector_operation: step,
 
             // 类型为新增时，id会是初始值null(即不传id)
             id: id,
