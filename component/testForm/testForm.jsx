@@ -14,17 +14,12 @@ var TestForm = React.createClass({
             saveUrl: '/save_feature',
             fadeOut: false,
             name: '',
-            nameErr: false,
-            description: '',
-            descErr: false,
+            nameErr: false
         };
     },
     render: function () {
         var name = this.state.name;
         var nameErr = this.state.nameErr ? ' has-error' : '';
-
-        var description = this.state.description;
-        var descErr = this.state.descErr ? ' has-error' : '';
         
         return (
             <Dialog title="添加测试" custom={true} fadeOut={this.state.fadeOut}>
@@ -45,21 +40,6 @@ var TestForm = React.createClass({
                                 onChange={this.setName}/>
                         
                         </div>
-
-                        <div className={"form-group" + descErr}>
-                            <label className="control-label" htmlFor="description">描述</label>
-                            
-                            <input
-                                id="description"
-                                name="description"
-                                type="text"
-                                className="form-control"
-                                placeholder=""
-                                tabIndex="2"
-                                value={description}
-                                onChange={this.setDesc}/>
-                        
-                        </div>
                     </div>
                     
                     <div className="modal-footer">
@@ -77,15 +57,9 @@ var TestForm = React.createClass({
             nameErr: !name
         });
     },
-    setDesc: function (e) {
-        this.setState({
-            description: e.target.value
-        });
-    },
     save: function (e) {
         var self = this;
         var name = this.state.name.trim();
-        var description = this.state.description.trim();
 
         e.preventDefault();
 
@@ -99,8 +73,7 @@ var TestForm = React.createClass({
         }
 
         this.postData({
-            name: name,
-            description: description
+            name: name
         });
     },
     postData: function (data) {
@@ -108,7 +81,7 @@ var TestForm = React.createClass({
             url: this.state.saveUrl,
             type: 'post',
             data: {
-                name: data.name,
+                description: data.name,
                 page_id: this.props.pageId,
 
                 // 区分新增还是修改
@@ -122,7 +95,6 @@ var TestForm = React.createClass({
     onSave: function (data) {
         this.props.onSave({
             name: this.state.name.trim(),
-            description: this.state.description.trim(),
             id: data.id
         });
 

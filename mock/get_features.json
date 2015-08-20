@@ -1,0 +1,27 @@
+{
+    "ec": "200",
+    "list": [
+        {
+            "description": "我要侧四",
+            "fun_id": 1,
+            "page_id": 1,
+            "selector_operation": [
+                {
+                    "id": 1234,
+                    "description": "点击“登录”按钮",
+                    "selector": ".div #btn",
+                    "operation": "click"
+                },
+                {
+                    "id": 2334,
+                    "description": "截取登录框",
+                    "selector": "html",
+                    "operation": "capture"
+                }
+            ],
+            "execTestTime": 0,
+            "created_at": "2015-08-1816: 52: 20",
+            "updated_at": "2015-08-1816: 52: 20"
+        }
+    ]
+}
