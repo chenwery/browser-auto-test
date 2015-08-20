@@ -123,6 +123,12 @@ var Product = React.createClass({
     },
     renderPages: function (data) {
         var pages = copy(data.list);
+        
+        pages = JSON.parse(
+            JSON.stringify(pages)
+                .replace(/\"page_name\"/, '\"name\"')
+                .replace(/\"page_id\"/, '\"id\"')
+        );
 
         // 获取到产品线下的页面后，回传给上级维护
         this.props.onPagesReceive && this.props.onPagesReceive(this.props.id, pages);
