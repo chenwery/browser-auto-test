@@ -126,8 +126,8 @@ var Product = React.createClass({
         
         pages = JSON.parse(
             JSON.stringify(pages)
-                .replace(/\"page_name\"/, '\"name\"')
-                .replace(/\"page_id\"/, '\"id\"')
+                .replace(/\"page_name\"/g, '\"name\"')
+                .replace(/\"page_id\"/g, '\"id\"')
         );
 
         // 获取到产品线下的页面后，回传给上级维护

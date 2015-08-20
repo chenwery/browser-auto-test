@@ -110,9 +110,9 @@ var TestPage = React.createClass({
     renderTestList: function (data) {
         var list = JSON.parse(
             JSON.stringify(data.list)
-                .replace(/\"description\"/,'\"name\"')
-                .replace(/\"fun_id\"/,'\"id\"')
-                .replace(/\"selector_operation\"/,'\"steps\"')
+                .replace(/\"description\"/g,'\"name\"')
+                .replace(/\"fun_id\"/g,'\"id\"')
+                .replace(/\"selector_operation\"/g,'\"steps\"')
         );
         this.setState({
             testList: list

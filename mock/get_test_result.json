@@ -1,6 +1,15 @@
 {
     "ec": 200,
-    "list" [
-        {}
+    "list": [
+        {
+            "history_img": "f",
+            "current_img": "f",
+            "diff_img": "f"
+        },
+        {
+            "history_img": "f",
+            "current_img": "f",
+            "diff_img": "f"
+        }
     ]
 }

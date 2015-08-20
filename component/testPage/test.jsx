@@ -71,7 +71,7 @@ var Test = React.createClass({
             },
             success: function () {},
             error: function () {
-                self.triggerTest(id);
+                // self.triggerTest(id);
             }
         });
     },
