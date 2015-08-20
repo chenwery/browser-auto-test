@@ -10,6 +10,7 @@ var ProdInfo = React.createClass({
             id: React.PropTypes.number.isRequire,
             name: React.PropTypes.string,
             description: React.PropTypes.string,
+            email: React.PropTypes.string,
             cookie: React.PropTypes.string
         }),
         onChange: React.PropTypes.func,
@@ -24,6 +25,7 @@ var ProdInfo = React.createClass({
     render: function () {
         var name = this.state.name || this.props.info.name;
         var description = this.state.description || this.props.info.description;
+        var email = this.state.email || this.props.info.email;
         var cookie = this.state.cookie || this.props.info.cookie;
 
         return (
@@ -36,6 +38,7 @@ var ProdInfo = React.createClass({
 
                 <div className="product-info-container">
                     <p>{description}</p>
+                    <p>{email}</p>
                     <p>{cookie}</p>
                 </div>
             </div>

@@ -94,6 +94,7 @@ var Product = React.createClass({
             id: this.props.id,
             name: this.props.name,
             description: this.props.description,
+            email: this.props.email,
             cookie: this.props.cookie
         };
 

@@ -16,6 +16,8 @@ var ProdForm = React.createClass({
             nameErr: false,
             description: '',
             descErr: false,
+            email: '',
+            emailErr: false,
             cookie: '',
             cookieErr: false,
             rendered: 0
@@ -29,10 +31,12 @@ var ProdForm = React.createClass({
         var name = currentProduct.name || this.state.name || '';
         var description = currentProduct.description || this.state.description || '';
         var cookie = currentProduct.cookie || this.state.cookie || '';
+        var email = currentProduct.email || this.state.email || '';
         
         var nameErr = this.state.nameErr ? ' has-error' : '';
         var descErr = this.state.descErr ? ' has-error' : '';
         var cookieErr = this.state.cookieErr ? ' has-error' : '';
+        var emailErr = this.state.emailErr ? ' has-error' : '';
         
         return (
             <Dialog title="添加项目" custom="true" fadeOut={this.state.fadeOut}>
@@ -58,21 +62,33 @@ var ProdForm = React.createClass({
                         <div className={"form-group" + descErr}>
                             <label className="control-label" htmlFor="description">项目描述</label>
                             
-                            <textarea
+                            <input
                                 id="description"
                                 name="description"
                                 className="form-control"
                                 placeholder="简单描述你的项目"
-                                rows="3"
                                 tabIndex="2"
                                 value={description}
-                                onChange={this.setDescription}>
-                            </textarea>
+                                onChange={this.setDescription} />
+
+                        </div>
+
+                        <div className={"form-group" + emailErr}>
+                            <label className="control-label" htmlFor="email">Email</label>
+                            
+                            <input
+                                id="email"
+                                name="email"
+                                className="form-control"
+                                placeholder="简单描述你的项目"
+                                tabIndex="3"
+                                value={email}
+                                onChange={this.setEmail} />
 
                         </div>
 
                         <div className={"form-group" + cookieErr}>
-                            <label className="control-label" htmlFor="cookie">cookie依赖</label>
+                            <label className="control-label" htmlFor="cookie">cookie</label>
                             
                             <input
                                 id="cookie"
@@ -80,7 +96,7 @@ var ProdForm = React.createClass({
                                 type="text"
                                 className="form-control"
                                 placeholder="如: cookie1=abc&cookie2=efg或cookie1=abc;cookie2=efg或cookie1=abc cookie2=efg"
-                                tabIndex="3"
+                                tabIndex="4"
                                 value={cookie}
                                 onChange={this.setCookie} />
 
@@ -104,6 +120,7 @@ var ProdForm = React.createClass({
                 name: currentProduct.name,
                 description: currentProduct.description || '',
                 cookie: currentProduct.cookie || '',
+                email: currentProduct.email || '',
                 rendered: this.state.rendered + 1
             });
         }
@@ -120,6 +137,12 @@ var ProdForm = React.createClass({
             descErr: !e.target.value
         });
     },
+    setEmail: function (e) {
+        this.setState({
+            email: e.target.value,
+            emailErr: !e.target.value
+        });
+    },
     setCookie: function (e) {
         this.setState({
             cookie: e.target.value,
@@ -129,6 +152,7 @@ var ProdForm = React.createClass({
     save: function (e) {
         var name = this.state.name.trim();
         var description = this.state.description.trim();
+        var email = this.state.email.trim();
         var cookie = this.state.cookie.trim();
 
         e.preventDefault();
@@ -136,10 +160,11 @@ var ProdForm = React.createClass({
         this.setState({
             nameErr: !name,
             descErr: !description,
+            emailErr: !email,
             cookieErr: !cookie
         });
 
-        if (!name || !description || !cookie) {
+        if (!name || !description || !email || !cookie) {
             console.log('input error');
             return;
         }
@@ -147,6 +172,7 @@ var ProdForm = React.createClass({
         this.postData({
             name: name,
             description: description,
+            email: email,
             cookie: cookie
         });        
     },
@@ -176,6 +202,7 @@ var ProdForm = React.createClass({
             id: this.props.currentProduct ? this.props.currentProduct.id : data.id,
             name: this.state.name.trim(),
             description: this.state.description.trim(),
+            email: this.state.email.trim(),
             cookie: this.state.cookie.trim()
         });
 
