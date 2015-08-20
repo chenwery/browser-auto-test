@@ -19,7 +19,7 @@ var TestPage = React.createClass({
     },
     getInitialState: function () {
         return {
-            detailUrl: '/get_test_list',
+            detailUrl: '/get_feature_list',
             testList: [],
             show: 'list',
             testName: null
@@ -95,7 +95,7 @@ var TestPage = React.createClass({
         ajax({
             url: this.state.detailUrl,
             data: {
-                id: pageId
+                page_id: pageId
             },
             success: this.renderTestList
         });

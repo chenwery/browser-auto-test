@@ -18,7 +18,7 @@ var Test = React.createClass({
     },
     getInitialState: function () {
         return {
-            delUrl: '/save_test'
+            delUrl: '/save_feature'
         };
     },
     render: function () {
