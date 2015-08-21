@@ -11,6 +11,7 @@ var Test = React.createClass({
         info: React.PropTypes.shape({
             id: React.PropTypes.number.isRequired
         }),
+        pageUrl: React.PropTypes.string,
         onDelete: React.PropTypes.func,
         opentTestDetail: React.PropTypes.func,
         onRun: React.PropTypes.func,
@@ -54,20 +55,22 @@ var Test = React.createClass({
     },
     runTest: function (e) {
         var id = this.props.info.id;
+        var url = this.props.pageUrl;
         var name = this.props.info.name;
 
         e.preventDefault();
 
-        this.triggerTest(id);
+        this.triggerTest(id, url);
 
         this.props.onRun && this.props.onRun(id, name);
     },
-    triggerTest: function (id) {
+    triggerTest: function (id, url) {
         var self = this;
         ajax({
             url: this.state.runUrl,
             data: {
-                fun_id: id
+                fun_id: id,
+                url: url
             },
             success: function () {},
             error: function () {

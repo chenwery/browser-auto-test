@@ -95,7 +95,7 @@ var TestForm = React.createClass({
     onSave: function (data) {
         this.props.onSave({
             name: this.state.name.trim(),
-            id: data.id
+            id: data.fun_id
         });
 
         this.fadeOut();

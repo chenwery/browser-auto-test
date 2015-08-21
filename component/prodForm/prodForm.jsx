@@ -205,7 +205,7 @@ var ProdForm = React.createClass({
         var save = this.props.onSave;
         
         save({
-            id: this.props.currentProduct ? this.props.currentProduct.id : data.id,
+            id: this.props.currentProduct ? this.props.currentProduct.id : data.product_id,
             name: this.state.name.trim(),
             description: this.state.description.trim(),
             email: this.state.email.trim(),

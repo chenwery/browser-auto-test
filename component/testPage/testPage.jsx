@@ -15,7 +15,8 @@ var TestPage = React.createClass({
     propTypes: {
         prodName: React.PropTypes.string,
         pageName: React.PropTypes.string,
-        pageId: React.PropTypes.number.isRequired
+        pageId: React.PropTypes.number.isRequired,
+        pageUrl: React.PropTypes.string
     },
     getInitialState: function () {
         return {
@@ -31,6 +32,7 @@ var TestPage = React.createClass({
         var prodName = this.props.prodName;
         var pageName = this.props.pageName;
         var testName = this.state.testName;
+        var pageUrl = this.props.pageUrl;
 
         var displayTestList = this.state.show === 'list' ? 'block' : 'none';
         var displayTestSteps = this.state.show === 'steps' ? 'block' : 'none';
@@ -53,6 +55,7 @@ var TestPage = React.createClass({
                     </section>
                     
                     <TestList
+                        pageUrl={pageUrl}
                         testList={testList}
                         opentTestDetail={this.showSteps}
                         onDelete={this.delTest}

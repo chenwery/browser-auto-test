@@ -50,10 +50,12 @@ var PageItem = React.createClass({
         var prodName = this.props.prodName;
         var pageName = this.props.name;
         var pageId = this.props.id;
+        var pageUrl = this.props.url;
 
         React.render(
             <TestPage
                 pageId={pageId}
+                pageUrl={pageUrl}
                 prodName={prodName}
                 pageName={pageName} />,
             document.querySelector('#index')

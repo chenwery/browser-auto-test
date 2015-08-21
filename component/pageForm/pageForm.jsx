@@ -224,7 +224,7 @@ var PageForm = React.createClass({
             email: this.state.email.trim(),
             description: this.state.description.trim(),
             cookie: this.state.cookie.trim(),
-            id: this.props.currentPage ? this.props.currentPage.id : newPage.id
+            id: this.props.currentPage ? this.props.currentPage.id : newPage.page_id
         });
     },
 

@@ -10,6 +10,7 @@ var Test = require('./test');
 
 var TestList = React.createClass({
     propTypes: {
+        pageUrl: React.PropTypes.string,
         testList: React.PropTypes.array,
         opentTestDetail: React.PropTypes.func,
         onDelete: React.PropTypes.func,
@@ -27,6 +28,7 @@ var TestList = React.createClass({
         var del = this.props.onDelete;
         var run = this.props.onRun;
         var view = this.props.onView;
+        var pageUrl = this.props.pageUrl;
         
         list.forEach(function (test, index) {
             testList.push(
@@ -34,6 +36,7 @@ var TestList = React.createClass({
                     key={index}
                     index={index}
                     info={test}
+                    pageUrl={pageUrl}
                     opentTestDetail={opentTestDetail}
                     onDelete={del}
                     onRun={run}
