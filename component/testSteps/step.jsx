@@ -2,7 +2,8 @@ var React = require('react');
 
 var Step = React.createClass({
     propTypes: {
-        step: React.PropTypes.object
+        step: React.PropTypes.object,
+        onChange: React.PropTypes.func
     },
     getInitialState: function () {
         return {
@@ -19,9 +20,8 @@ var Step = React.createClass({
         };
     },
     render: function () {
-        var step = this.state.step || this.props.step;
+        var step = this.props.step;
         var seq = this.props.index + 1;
-        
         var op = this.state.OPERATION_MAP[step.operation];
 
         return (
@@ -30,7 +30,7 @@ var Step = React.createClass({
                     {seq}
                 </td>
                 <td>
-                    {step.description}
+                    {step.name}
                 </td>
                 <td>
                     {step.selector}
@@ -50,7 +50,7 @@ var Step = React.createClass({
     // 编辑(修改)动作
     edit: function (e) {
         var StepForm = require('../stepForm/stepForm');
-        var currentStep = this.state.step || this.props.step;
+        var currentStep = this.props.step;
         
         e.preventDefault();
 
@@ -61,26 +61,21 @@ var Step = React.createClass({
         React.render(
             <StepForm
                 onSave={this.onSave}
-                currentStep={currentStep}>
-            </StepForm>,
+                currentStep={currentStep} />,
             document.getElementById('extraContainer')
         );
     },
-    onSave: function (newStep) {
-        this.reset(newStep);
+    onSave: function (stepInfo) {
+        this.reset(stepInfo);
     },
 
     // 更改保存后更新当前视图内容
-    reset: function (newStep) {
-        this.setState({
-            step: {
-                description: newStep.description,
-                selector: newStep.selector,
-                operation: newStep.operation,
-                inputValue: newStep.inputValue
-            }
-        });
+    reset: function (stepInfo) {
+        var stepId = this.props.step.id;
+        this.props.onChange && this.props.onChange(stepId, stepInfo);
     },
+
+    // TODO
     del: function (e) {
         e.preventDefault();
     }

@@ -41,7 +41,7 @@ var PageList = React.createClass({
             <ul className="page-list">
                 {pageList}
                 
-                <li onClick={this.renderAddForm}>添加页面+</li>
+                <li className="add-page-btn" onClick={this.renderAddForm}>添加页面+</li>
             </ul>
         );
     },

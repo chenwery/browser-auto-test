@@ -21,7 +21,7 @@ var StepForm = React.createClass({
             fadeOut: false,
             selector: '',
             selectorErr: false,
-            description: '',
+            name: '',
             descErr: false,
             operation: 'capture',
             inputValue: '',
@@ -36,7 +36,7 @@ var StepForm = React.createClass({
         var currentStep = !this.rendered && this.props.currentStep || {};
         this.rendered++;
 
-        var description = currentStep.description || this.state.description;
+        var name = currentStep.name || this.state.name;
         var descErr = this.state.descErr ? ' has-error' : '';
         
         var selector = currentStep.selector || this.state.selector;
@@ -56,10 +56,10 @@ var StepForm = React.createClass({
                     <div className="modal-body">
                         
                         <div className={"form-group" + descErr}>
-                            <label className="control-label" htmlFor="description">描述</label>
+                            <label className="control-label" htmlFor="name">描述</label>
                             <input
-                                id="description"
-                                name="description"
+                                id="name"
+                                name="name"
                                 type="text"
                                 className="form-control"
                                 placeholder="描述你需要的动作，例如: 点击登录框, 截取屏幕..."
@@ -67,12 +67,12 @@ var StepForm = React.createClass({
 
                                 // 假如是编辑，不需要自动聚焦
                                 autoFocus={currentStep.selector ? false : true}
-                                value={description}
+                                value={name}
                                 onChange={this.setDescription} />
                         </div>
 
                         <div className={"form-group" + selectorErr}>
-                            <label className="control-label" htmlFor="description">目标元素</label>
+                            <label className="control-label" htmlFor="name">目标元素</label>
                             <input
                                 id="selector"
                                 name="selector"
@@ -102,7 +102,7 @@ var StepForm = React.createClass({
                         </div>
 
                         <div className={"form-group" + inputErr} style={{display: displayInput}}>
-                            <label className="control-label" htmlFor="description">输入/选择的值</label>
+                            <label className="control-label" htmlFor="name">输入/选择的值</label>
                             <input
                                 id="inputValue"
                                 name="inputValue"
@@ -132,7 +132,7 @@ var StepForm = React.createClass({
         var value = e.target.value;
 
         this.setState({
-            description: value,
+            name: value,
             descErr: !value
         });
     },
@@ -170,7 +170,7 @@ var StepForm = React.createClass({
     save: function (e) {
         var id = this.state.id;
 
-        var description = this.state.description.trim();
+        var name = this.state.name.trim();
         var selector = this.state.selector.trim();
         var operation = this.state.operation;
         var inputValue = this.state.inputValue.trim();
@@ -178,12 +178,12 @@ var StepForm = React.createClass({
         e.preventDefault();
 
         this.setState({
-            descErr: !description,
+            descErr: !name,
             selectorErr: !selector,
             inputErr: !inputValue
         });
 
-        if (!description || !selector) {
+        if (!name || !selector) {
             return;
         }
 
@@ -192,7 +192,7 @@ var StepForm = React.createClass({
         }
 
         var step = JSON.stringify([{
-            description: description,
+            name: name,
             selector: selector,
             operation: operation,
             inputValue: inputValue
@@ -227,7 +227,7 @@ var StepForm = React.createClass({
         // 保存成功后执行父级回调
         this.props.onSave({
             id: this.props.currentStep ? this.props.currentStep.id : data.id,
-            description: this.state.description.trim(),
+            name: this.state.name.trim(),
             selector: this.state.selector.trim(),
             operation: this.state.operation,
             inputValue: this.state.inputValue.trim()

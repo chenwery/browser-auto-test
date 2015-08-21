@@ -4,19 +4,22 @@ var Step = require('./step');
 
 var StepList = React.createClass({
     propTypes: {
-        list: React.PropTypes.array
+        list: React.PropTypes.array,
+        modifyStep: React.PropTypes.func
     },
     getInitialState: function () {
         return {};
     },
     render: function () {
         var list = this.props.list || [];
-        var testList = [];
+        var stepList = [];
+        var modifyStep = this.modifyStep;
         
         list.map(function (step, index) {
-            testList.push(
+            stepList.push(
                 <Step
                     step={step}
+                    onChange={modifyStep}
                     key={index}
                     index={index} />
             );
@@ -40,12 +43,15 @@ var StepList = React.createClass({
                     </tr>
                 </thead>
                 <tbody>
-                    {testList}
+                    {stepList}
                 </tbody>
             </table>
         );
     },
-    componentDidMount: function () {}
+    componentDidMount: function () {},
+    modifyStep: function (stepId, stepInfo) {
+        this.props.modifyStep && this.props.modifyStep(stepId, stepInfo);
+    }
 });
 
 module.exports = StepList;

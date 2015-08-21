@@ -11,7 +11,8 @@ var TestSteps = React.createClass({
         testId: React.PropTypes.number,
         onReturn: React.PropTypes.func,
         steps: React.PropTypes.array,
-        onAdd: React.PropTypes.func
+        onAdd: React.PropTypes.func,
+        onModify: React.PropTypes.func
     },
     getInitialState: function () {
         return {
@@ -19,6 +20,8 @@ var TestSteps = React.createClass({
         };
     },
     render: function () {
+        var modifyStep = this.modifyStep;
+
         if (!this.props.testId) {
             return false;
         }
@@ -31,7 +34,7 @@ var TestSteps = React.createClass({
                     <button className="btn btn-primary" onClick={this.openAddDialog}>增加操作</button>
                 </section>
                 <div className="test-steps-container">
-                    <StepList list={this.props.steps} />
+                    <StepList list={this.props.steps} modifyStep={modifyStep}/>
                 </div>
             </div>
         );
@@ -67,6 +70,12 @@ var TestSteps = React.createClass({
         var testId = this.props.testId;
         console.log('add new step');
         this.props.onAdd && this.props.onAdd(testId, newStep);
+    },
+
+    // 修改步骤
+    modifyStep: function (stepId, stepInfo) {
+        var testId = this.props.testId;
+        this.props.onModify && this.props.onModify(testId, stepId, stepInfo);
     }
 });
 

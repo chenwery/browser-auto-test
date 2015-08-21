@@ -66,7 +66,8 @@ var TestPage = React.createClass({
                         testId={this.state.testId}
                         onReturn={this.showList}
                         steps={this.state.steps}
-                        onAdd={this.addStep} />
+                        onAdd={this.addStep}
+                        onModify={this.modifyStep} />
                 </div>
 
                 <div className="test-result-container" style={{display: displayTestResult}} ref="result">
@@ -203,7 +204,10 @@ var TestPage = React.createClass({
         var TestResult = require('../testResult/testResult');
         
         React.render(
-            <TestResult testId={id} testName={testName} onReturn={this.showList}></TestResult>,
+            <TestResult
+                testId={id}
+                testName={testName}
+                onReturn={this.showList} />,
             this.refs.result.getDOMNode()
         );
     },
@@ -219,6 +223,30 @@ var TestPage = React.createClass({
                 }
                 test.steps.push(newStep);
                 steps = test.steps;
+            }
+        });
+
+        this.setState({
+            testList: list,
+            steps: steps
+        });
+    },
+
+    // 修改步骤
+    modifyStep: function (testId, stepId, stepInfo) {
+        var list = copy(this.state.testList);
+        var steps;
+        list.map(function (test) {
+            if (test.id === testId) {
+                steps = test.steps;
+                test.steps.map(function (step) {
+                    if (step.id === stepId) {
+                        step.name = stepInfo.name;
+                        step.selector = stepInfo.selector;
+                        step.operation = stepInfo.operation;
+                        step.inputValue = stepInfo.inputValue;
+                    }
+                });
             }
         });
 
