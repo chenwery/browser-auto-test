@@ -1,6 +1,6 @@
 var React = require('react');
 
-require('./main.less');
+require('./main.scss');
 
 var Main = React.createClass({
     getInitialState: function () {

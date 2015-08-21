@@ -5,7 +5,7 @@
 var React = require('react');
 var ajax = require('../../lib/ajax');
 
-require('./stepForm.less');
+require('./stepForm.scss');
 
 var Dialog = require('../dialog/dialog');
 

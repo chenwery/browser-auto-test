@@ -19,6 +19,7 @@ module.exports = {
     module: {
         loaders: [
             { test: /\.jsx$/, loaders: ['jsx?harmony'] },
+            { test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader' },
             { test: /\.less$/, loader: 'style-loader!css-loader!less-loader' }, // use ! to chain loaders
             { test: /\.css$/, loader: 'style-loader!css-loader' },
             {test: /\.(png|jpg|gif)$/, loader: 'url-loader?limit=8192'} // inline base64 URLs for <=8k images, direct URLs for the rest

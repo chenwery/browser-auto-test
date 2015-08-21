@@ -1,6 +1,6 @@
 var React = require('react');
 
-require('./user.less');
+require('./user.scss');
 
 var User = React.createClass({
     getInitialState: function () {

@@ -1,6 +1,6 @@
 var React = require('react');
 
-require('./page.less');
+require('./page.scss');
 
 var Header = require('../header/header');
 var Main = require('../main/main');

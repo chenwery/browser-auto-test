@@ -4,7 +4,7 @@ var React = require('react');
 var ajax = require('../../lib/ajax');
 var copy = require('../../lib/copy');
 
-require('./testPage.less');
+require('./testPage.scss');
 
 var TestList = require('./testList');
 var TestSteps = require('../testSteps/testSteps');

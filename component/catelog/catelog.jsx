@@ -6,7 +6,7 @@ var React = require('react');
 var copy = require('../../lib/copy');
 var ajax = require('../../lib/ajax');
 
-require('./catelog.less');
+require('./catelog.scss');
 
 var ProdForm = require('../prodForm/prodForm');
 

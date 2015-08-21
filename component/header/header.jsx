@@ -2,7 +2,7 @@ var React = require('react');
 
 var ajax = require('../../lib/ajax');
 
-require('./header.less');
+require('./header.scss');
 
 var User = require('../user/user');
 

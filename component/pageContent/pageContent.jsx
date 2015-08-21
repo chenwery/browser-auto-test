@@ -1,6 +1,6 @@
 var React = require('react');
 
-require('./pageContent.less');
+require('./pageContent.scss');
 
 var PageContent = React.createClass({
     getInitialState: function () {

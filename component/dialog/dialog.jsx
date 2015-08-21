@@ -1,6 +1,6 @@
 var React = require('react');
 
-require('./dialog.less');
+require('./dialog.scss');
 
 var Dialog = React.createClass({
     getInitialState: function () {

@@ -1,6 +1,6 @@
 var React = require('react');
 
-require('./testResult.less');
+require('./testResult.scss');
 
 var ajax = require('../../lib/ajax');
 

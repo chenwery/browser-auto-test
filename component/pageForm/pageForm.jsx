@@ -5,7 +5,7 @@ var React = require('react');
 
 var ajax = require('../../lib/ajax');
 
-require('./pageForm.less');
+require('./pageForm.scss');
 
 var PageForm = React.createClass({
     propTypes: {

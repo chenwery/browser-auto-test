@@ -2,7 +2,7 @@ var React = require('react');
 var ajax = require('../../lib/ajax');
 var copy = require('../../lib/copy');
 
-require('./testSteps.less');
+require('./testSteps.scss');
 
 var StepList = require('./stepList');
 
