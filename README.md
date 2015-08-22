@@ -44,4 +44,4 @@ add/del/edit test
 
 > **/get_steps**
 
-get all steps of a test feature
+get all steps of a test
