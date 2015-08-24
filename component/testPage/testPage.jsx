@@ -225,9 +225,19 @@ var TestPage = React.createClass({
             <TestResult
                 testId={id}
                 testName={testName}
-                onReturn={this.showList} />,
+                onReturn={this.resultReturn}
+                from={this.state.show} />,
             this.refs.result.getDOMNode()
         );
+    },
+    resultReturn: function (from) {
+        if (from === 'list') {
+            this.showList();
+        } else {
+            this.setState({
+                show: from
+            });
+        }
     },
 
     // 增加测试步骤

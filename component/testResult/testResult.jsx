@@ -8,6 +8,7 @@ var ResultList = require('./resultList');
 
 var TestResult = React.createClass({
     propTypes: {
+        from: React.PropTypes.string,
         onReturn: React.PropTypes.func
     },
     getInitialState: function () {
@@ -93,7 +94,7 @@ var TestResult = React.createClass({
             visible: false
         });
 
-        this.props.onReturn && this.props.onReturn();
+        this.props.onReturn && this.props.onReturn(this.props.from);
     }
 });
 
