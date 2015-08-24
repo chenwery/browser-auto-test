@@ -198,7 +198,7 @@ var StepForm = React.createClass({
             inputValue: inputValue
         }]);
 
-        this.postData({
+        /*this.postData({
             selector_operation: step,
 
             // 类型为新增时，id会是初始值null(即不传id)
@@ -209,9 +209,11 @@ var StepForm = React.createClass({
 
             // 类型为“修改”还是“新增”的标记位
             cmd: this.props.currentStep ? 'edit' : 'add',
-        });
+        });*/
+
+        this.onSave();
     },
-    postData: function (data) {
+    /*postData: function (data) {
         
         // 保存
         ajax({
@@ -221,12 +223,12 @@ var StepForm = React.createClass({
             success: this.onSave,
             error: this.onErr
         });
-    },
-    onSave: function (data) {
+    },*/
+    onSave: function () {
 
         // 保存成功后执行父级回调
         this.props.onSave({
-            id: this.props.currentStep ? this.props.currentStep.id : data.id,
+            //id: this.props.currentStep ? this.props.currentStep.id : data.id,
             name: this.state.name.trim(),
             selector: this.state.selector.trim(),
             operation: this.state.operation,

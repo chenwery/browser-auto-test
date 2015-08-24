@@ -11,6 +11,11 @@ var TestSteps = require('../testSteps/testSteps');
 
 var PageHeader = require('./pageHeader');
 
+// 生成随机(伪随机)id
+function randomId() {
+    return 'id_' + parseInt(Math.random() * 100000);
+}
+
 var TestPage = React.createClass({
     propTypes: {
         prodName: React.PropTypes.string,
@@ -21,6 +26,7 @@ var TestPage = React.createClass({
     getInitialState: function () {
         return {
             detailUrl: '/autotest/api/pageHadFun/get',
+            editStepsUrl: '/autotest/api/pageHadFun/edit',
             testList: [],
             show: 'list',
             testName: null,
@@ -118,6 +124,13 @@ var TestPage = React.createClass({
                 .replace(/\"fun_id\"/g,'\"id\"')
                 .replace(/\"selector_operation\"/g,'\"steps\"')
         );
+        list.map(function (test) {
+            test.steps.map(function (step) {
+
+                // 为每个步骤分配一个临时id
+                !step.id && (step.id = randomId());
+            });
+        });
         this.setState({
             testList: list
         });
@@ -224,6 +237,10 @@ var TestPage = React.createClass({
                 if (!test.steps || !test.steps.length) {
                     test.steps = [];
                 }
+
+                // 手动给新步骤增加一个id
+                !newStep.id && (newStep.id = randomId());
+                
                 test.steps.push(newStep);
                 steps = test.steps;
             }
@@ -233,6 +250,33 @@ var TestPage = React.createClass({
             testList: list,
             steps: steps
         });
+
+        this.postStepsData(testId, steps);
+    },
+
+    // 删除测试步骤
+    delStep: function (testId, stepInfo) {
+        var list = copy(this.state.testList);
+        var steps;
+        var index;
+        list.map(function (test) {
+            if (test.id === testId) {
+                steps = test.steps;
+                test.steps.map(function (step, i) {
+                    if (step.id === stepId) {
+                        index = i;
+                    }
+                });
+                index && test.steps.splice(index, 1);
+            }
+        });
+
+        this.setState({
+            testList: list,
+            steps: steps
+        });
+
+        this.postStepsData(testId, steps);
     },
 
     // 修改步骤
@@ -256,6 +300,25 @@ var TestPage = React.createClass({
         this.setState({
             testList: list,
             steps: steps
+        });
+
+        this.postStepsData(testId, steps);
+    },
+
+    // 增、删、改步骤后需要把新数据发送到后台
+    postStepsData: function (testId, steps) {
+        console.log('edit steps');
+        var stepsStr = JSON.stringify(steps);
+        console.log(testId, stepsStr);
+
+        ajax({
+            url: this.state.editStepsUrl,
+            data: {
+                fun_id: testId,
+                selector_operation: stepsStr
+            },
+            success: function () {},
+            error: function () {}
         });
     }
 
