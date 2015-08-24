@@ -6,7 +6,7 @@ var copy = require('../../lib/copy');
 
 require('./testPage.scss');
 
-var TestList = require('./testList');
+var TestList = require('../testList/testList');
 var TestSteps = require('../testSteps/testSteps');
 
 var PageHeader = require('./pageHeader');
@@ -76,7 +76,9 @@ var TestPage = React.createClass({
                         onReturn={this.showList}
                         steps={this.state.steps}
                         onAdd={this.addStep}
-                        onModify={this.modifyStep} />
+                        onModify={this.modifyStep}
+                        onDel={this.delStep}
+                        onRun={this.runTest} />
                 </div>
 
                 <div className="test-result-container" style={{display: displayTestResult}} ref="result">
@@ -212,7 +214,7 @@ var TestPage = React.createClass({
     runTest: function (id, testName) {
         this.setState({
             show: 'result',
-            testName: testName
+            testName: testName || this.state.testName
         });
         this.showResult(id, testName);
     },
@@ -255,7 +257,7 @@ var TestPage = React.createClass({
     },
 
     // 删除测试步骤
-    delStep: function (testId, stepInfo) {
+    delStep: function (testId, stepId) {
         var list = copy(this.state.testList);
         var steps;
         var index;
@@ -267,7 +269,7 @@ var TestPage = React.createClass({
                         index = i;
                     }
                 });
-                index && test.steps.splice(index, 1);
+                typeof index === 'number' && test.steps.splice(index, 1);
             }
         });
 

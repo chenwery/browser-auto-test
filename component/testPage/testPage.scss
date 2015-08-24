@@ -2,56 +2,6 @@
     display: inline-block;
 }
 
-.edit-btn:before {
-    content: "\270f";
-}
-
-.run-btn:before {
-    content: "\e029";
-}
-
-.view-btn:before {
-    content: "\e022";
-}
-
-.del-btn:before {
-    content: "\e020";
-}
-
-.edit-btn,
-.run-btn,
-.view-btn,
-.del-btn {
-    margin: 0 20px 0 0;
-
-    font-size: 16px;
-    color: #333;
-    cursor: pointer;
-
-    &:hover {
-        text-decoration: none;
-    }
-}
-
-table.test-list {
-    th:first-child,
-    td:first-child {
-        width: 100px;
-    }
-    th:last-child,
-    td:last-child {
-        width: 250px;
-    }
-}
-
-.test-name {
-    &:active,
-    &:hover,
-    &:focus {
-        text-decoration: none;
-    }
-}
-
 .operation-area {
     margin-bottom: 15px;
     .btn {

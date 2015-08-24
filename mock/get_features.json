@@ -35,6 +35,11 @@
                     "description": "截取产品列表",
                     "selector": "html",
                     "operation": "capture"
+                },
+                {
+                    "description": "截取登录框",
+                    "selector": "html",
+                    "operation": "capture"
                 }
             ],
             "execTestTime": 0,

@@ -3,6 +3,8 @@
  */
 var React = require('react');
 
+require('./testList.scss');
+
 var ajax = require('../../lib/ajax');
 var copy = require('../../lib/copy');
 

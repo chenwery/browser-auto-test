@@ -2,10 +2,11 @@ var React = require('react');
 
 var Step = require('./step');
 
-var StepList = React.createClass({
+var Steps = React.createClass({
     propTypes: {
         list: React.PropTypes.array,
-        modifyStep: React.PropTypes.func
+        modifyStep: React.PropTypes.func,
+        delStep: React.PropTypes.func
     },
     getInitialState: function () {
         return {};
@@ -14,12 +15,14 @@ var StepList = React.createClass({
         var list = this.props.list || [];
         var stepList = [];
         var modifyStep = this.modifyStep;
+        var delStep = this.delStep;
         
         list.map(function (step, index) {
             stepList.push(
                 <Step
                     step={step}
                     onChange={modifyStep}
+                    onDel={delStep}
                     key={index}
                     index={index} />
             );
@@ -43,15 +46,19 @@ var StepList = React.createClass({
                     </tr>
                 </thead>
                 <tbody>
+                    
                     {stepList}
+                
                 </tbody>
             </table>
         );
     },
-    componentDidMount: function () {},
     modifyStep: function (stepId, stepInfo) {
         this.props.modifyStep && this.props.modifyStep(stepId, stepInfo);
+    },
+    delStep: function (stepId) {
+        this.props.delStep && this.props.delStep(stepId);
     }
 });
 
-module.exports = StepList;
+module.exports = Steps;

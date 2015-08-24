@@ -4,7 +4,7 @@ var copy = require('../../lib/copy');
 
 require('./testSteps.scss');
 
-var StepList = require('./stepList');
+var Steps = require('./steps');
 
 var TestSteps = React.createClass({
     propTypes: {
@@ -12,15 +12,16 @@ var TestSteps = React.createClass({
         onReturn: React.PropTypes.func,
         steps: React.PropTypes.array,
         onAdd: React.PropTypes.func,
-        onModify: React.PropTypes.func
+        onModify: React.PropTypes.func,
+        onDel: React.PropTypes.func,
+        onRun: React.PropTypes.func
     },
     getInitialState: function () {
-        return {
-            saveUrl: '/save_steps'
-        };
+        return {};
     },
     render: function () {
         var modifyStep = this.modifyStep;
+        var delStep = this.delStep;
 
         if (!this.props.testId) {
             return false;
@@ -34,14 +35,19 @@ var TestSteps = React.createClass({
                     <button className="btn btn-primary" onClick={this.openAddDialog}>增加操作</button>
                 </section>
                 <div className="test-steps-container">
-                    <StepList list={this.props.steps} modifyStep={modifyStep}/>
+                    <Steps
+                        list={this.props.steps}
+                        modifyStep={modifyStep}
+                        delStep={delStep} />
                 </div>
             </div>
         );
     },
-    componentDidMount: function () {},
     runTest: function (e) {
+        var testId = this.props.testId;
+
         e.preventDefault();
+        this.props.onRun && this.props.onRun(testId);
     },
     return: function (e) {
         e && e.preventDefault();
@@ -76,6 +82,11 @@ var TestSteps = React.createClass({
     modifyStep: function (stepId, stepInfo) {
         var testId = this.props.testId;
         this.props.onModify && this.props.onModify(testId, stepId, stepInfo);
+    },
+
+    delStep: function (stepId) {
+        var testId = this.props.testId;
+        this.props.onDel && this.props.onDel(testId, stepId);
     }
 });
 

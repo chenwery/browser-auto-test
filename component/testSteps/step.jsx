@@ -3,7 +3,8 @@ var React = require('react');
 var Step = React.createClass({
     propTypes: {
         step: React.PropTypes.object,
-        onChange: React.PropTypes.func
+        onChange: React.PropTypes.func,
+        onDel: React.PropTypes.func
     },
     getInitialState: function () {
         return {
@@ -40,7 +41,7 @@ var Step = React.createClass({
                 </td>
                 <td>
                     <a className="glyphicon edit-btn" onClick={this.edit}></a>
-                    <a className="glyphicon del-btn" onClick={this.del}></a>
+                    <a className="glyphicon del-btn" onClick={this.openDelDialog}></a>
                 </td>
             </tr>
         );
@@ -75,9 +76,27 @@ var Step = React.createClass({
         this.props.onChange && this.props.onChange(stepId, stepInfo);
     },
 
-    // TODO
-    del: function (e) {
+    openDelDialog: function (e) {
+        var Dialog = require('../dialog/dialog');
+
         e.preventDefault();
+
+        React.render(
+            <span></span>,
+            document.querySelector('#extraContainer')
+        );
+        React.render(
+            <Dialog onConfirm={this.del}>
+                <p style={{textAlign: 'center'}}>确定删除此步骤吗？</p>
+            </Dialog>,
+            document.querySelector('#extraContainer')
+        );
+    },
+
+    del: function () {
+        var stepId = this.props.step.id;
+
+        this.props.onDel && this.props.onDel(stepId);
     }
 });
 
