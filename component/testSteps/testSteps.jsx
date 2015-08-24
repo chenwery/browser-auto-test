@@ -14,7 +14,8 @@ var TestSteps = React.createClass({
         onAdd: React.PropTypes.func,
         onModify: React.PropTypes.func,
         onDel: React.PropTypes.func,
-        onRun: React.PropTypes.func
+        onRun: React.PropTypes.func,
+        onView: React.PropTypes.func
     },
     getInitialState: function () {
         return {};
@@ -32,6 +33,7 @@ var TestSteps = React.createClass({
                 <section className="operation-area">
                     <button className="btn btn-default" onClick={this.return}>返回</button>
                     <button className="btn btn-info" onClick={this.runTest}>运行测试</button>
+                    <button className="btn btn-success" onClick={this.viewTest}>查看结果</button>
                     <button className="btn btn-primary" onClick={this.openAddDialog}>增加操作</button>
                 </section>
                 <div className="test-steps-container">
@@ -48,6 +50,13 @@ var TestSteps = React.createClass({
 
         e.preventDefault();
         this.props.onRun && this.props.onRun(testId);
+    },
+    viewTest: function (e) {
+        var testId = this.props.testId;
+
+        e.preventDefault();
+
+        this.props.onView && this.props.onView(testId);
     },
     return: function (e) {
         e && e.preventDefault();

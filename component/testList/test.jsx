@@ -60,23 +60,7 @@ var Test = React.createClass({
 
         e.preventDefault();
 
-        this.triggerTest(id, url);
-
         this.props.onRun && this.props.onRun(id, name);
-    },
-    triggerTest: function (id, url) {
-        var self = this;
-        ajax({
-            url: this.state.runUrl,
-            data: {
-                fun_id: id,
-                url: url
-            },
-            success: function () {},
-            error: function () {
-                // self.triggerTest(id);
-            }
-        });
     },
     showDelDialog: function (e) {
         var id = this.props.info.id;

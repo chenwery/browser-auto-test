@@ -1,20 +1,97 @@
 var React = require('react');
 
+var ajax = require('../../lib/ajax');
+
+var Result = React.createClass({
+    getInitialState: function () {
+        return {
+            setBaseImgUrl: '/autotest/api/task/setbase'
+        };
+    },
+    render: function () {
+        return (
+            <tr key={index}>
+                <th>{this.props.description}</th>
+                <td>
+                    <img src={this.props.historyImg} alt="基准图" />
+                </td>
+                <td>
+                    <img src={this.props.currentImg} alt="当前图" />
+                    <button
+                        className="btn btn-default set-base-btn"
+                        onClick={this.setBaseImg}
+                        disabled={this.state.set}>
+                            设为基准图
+                    </button>
+                </td>
+                <td>
+                    <img src={this.props.diffImg} alt="对比图" />
+                </td>
+            </tr>
+        );
+    },
+    setBaseImg: function (e) {
+        var imgName = this.props.imgName;
+
+        e.preventDefault();
+
+        this.postData(imgName);
+    },
+    postData: function (imgName) {
+        ajax({
+            url: this.state.setBaseImgUrl,
+            type: 'post',
+            data: {
+                img_name: imgName
+            },
+            success: this.onSet
+        });
+    },
+    onSet: function () {
+        var Dialog = require('../dialog/dialog');
+        React.render(
+            <span></span>,
+            document.querySelector('#extraContainer')
+        );
+        React.render(
+            <Dialog>设置成功，下次运行测试时将会使用当前图片作为基准图</Dialog>,
+            document.querySelector('#extraContainer')
+        );
+
+        this.setState({
+            set: true
+        });
+    }
+});
+
 var ResultList = React.createClass({
     getInitialState: function () {
         return {};
     },
     render: function () {
+        var staticBasePath = 'http://' + window.location.host + '/';
         var list = this.props.list;
         var resultList = [];
+
+        var setBaseImg = this.setBaseImg;
+        
         list.map(function (result, index) {
+            var description = result.name;
+
+            // 拼接图片路径
+            var historyImg = staticBasePath + result.basePath + '/' + result.imgName + '.history.png?' + Date.now();
+            var currentImg = staticBasePath + result.basePath + '/' + result.imgName + '.png?' + Date.now();
+            var diffImg = staticBasePath + result.basePath + '/' + result.imgName + '.fail.png?' + Date.now();
+
             resultList.push(
-                <tr key={index}>
-                    <th>{result.description}</th>
-                    <td><img src={result.history_img} alt="历史图" /></td>
-                    <td><img src={result.current_img} alt="当前图" /></td>
-                    <td><img src={result.diff_img} alt="对比图" /></td>
-                </tr>
+                <Result
+                    key={index}
+                    index={index}
+                    description={description}
+                    imgName={result.imgName}
+                    historyImg={historyImg}
+                    currentImg={currentImg}
+                    diffImg={diffImg} />
             );
         });
         
@@ -23,9 +100,9 @@ var ResultList = React.createClass({
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>历史截图</th>
-                        <th>本次截图</th>
-                        <th>截图对比</th>
+                        <th>基准图</th>
+                        <th>当前图</th>
+                        <th>对比图</th>
                     </tr>
                 </thead>
                 <tbody>

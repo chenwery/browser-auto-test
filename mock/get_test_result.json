@@ -1,17 +1,20 @@
 {
-    "ec": 200,
+    "ec": "200",
     "list": [
-        {   
-            "description": "登录框",
-            "history_img": "http://www.tech-ex.com/article_images3/4/504514/10.jpg",
-            "current_img": "http://p2.qhimg.com/t01eff6b5622f92c890.jpg",
-            "diff_img": "http://pic.yesky.com/imagelist/07/46/6183412_599.jpg"
-        },
         {
-            "description": "确定按钮",
-            "history_img": "http://www.tech-ex.com/article_images3/4/504514/10.jpg",
-            "current_img": "http://p2.qhimg.com/t01eff6b5622f92c890.jpg",
-            "diff_img": "http://pic.yesky.com/imagelist/07/46/6183412_599.jpg"
+            "fun_id": 29,
+            "last_result": [
+                {
+                    "name": "#search",
+                    "imgName": "10",
+                    "operationStep": "selector:#search----operation: capture=>",
+                    "basePath": "public/result/"
+                }
+            ],
+            "new_result": "",
+            "execTestTime": 0,
+            "created_at": "2015-08-24 07:59:04",
+            "updated_at": "2015-08-24 08:34:37"
         }
     ]
 }

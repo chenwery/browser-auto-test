@@ -26,6 +26,7 @@ var TestPage = React.createClass({
     getInitialState: function () {
         return {
             detailUrl: '/autotest/api/pageHadFun/get',
+            runTestUrl: '/autotest/api/task/exec',
             editStepsUrl: '/autotest/api/pageHadFun/edit',
             testList: [],
             show: 'list',
@@ -66,7 +67,7 @@ var TestPage = React.createClass({
                         opentTestDetail={this.showSteps}
                         onDelete={this.delTest}
                         onRun={this.runTest}
-                        onView={this.runTest} />
+                        onView={this.viewTestResult} />
                 
                 </div>
 
@@ -78,7 +79,8 @@ var TestPage = React.createClass({
                         onAdd={this.addStep}
                         onModify={this.modifyStep}
                         onDel={this.delStep}
-                        onRun={this.runTest} />
+                        onRun={this.runTest}
+                        onView={this.viewTestResult} />
                 </div>
 
                 <div className="test-result-container" style={{display: displayTestResult}} ref="result">
@@ -127,6 +129,8 @@ var TestPage = React.createClass({
                 .replace(/\"selector_operation\"/g,'\"steps\"')
         );
         list.map(function (test) {
+            test.steps &&
+            test.steps.length &&
             test.steps.map(function (step) {
 
                 // 为每个步骤分配一个临时id
@@ -211,7 +215,39 @@ var TestPage = React.createClass({
     },
 
     // 运行测试
-    runTest: function (id, testName) {
+    runTest: function (testId) {
+        console.log('run test: ' + testId);
+        
+        var id = testId;
+        var url = this.props.pageUrl;
+
+        this.postRun(id, url);
+    },
+    postRun: function (id, url) {
+        ajax({
+            url: this.state.runTestUrl,
+            data: {
+                fun_id: id,
+                url: url
+            },
+            success: this.onRunEnd,
+            error: function () {}
+        });
+    },
+    onRunEnd: function (data) {
+        var Dialog = require('../dialog/dialog');
+        React.render(
+            <span></span>,
+            document.getElementById('extraContainer')
+        );
+        React.render(
+            <Dialog>测试已经开始运行，需要消耗一些时间，请稍后查看测试结果</Dialog>,
+            document.getElementById('extraContainer')
+        );
+    },
+
+    // 查看测试结果
+    viewTestResult: function (id, testName) {
         this.setState({
             show: 'result',
             testName: testName || this.state.testName

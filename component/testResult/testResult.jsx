@@ -15,7 +15,7 @@ var TestResult = React.createClass({
         return {
             visible: true,
             list: null,
-            resultUrl: '/get_test_result'
+            resultUrl: '/autotest/api/task/getResult'
         };
     },
     render: function () {
@@ -60,7 +60,7 @@ var TestResult = React.createClass({
         });
     },
     renderResult: function (result) {
-        var list = result.list;
+        var list = result.list[0].last_result;
 
         this.setState({
             list: list,

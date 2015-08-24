@@ -59,7 +59,8 @@
         
     }
 
-    .toggle-sub:before {
+    .toggle-sub:before,
+    .page-item:before {
         margin: 0 3px 0 0;
 
         content: "\e117";
@@ -104,7 +105,7 @@
         cursor: pointer;
 
         &:hover {
-            text-indent: 2px;
+            text-indent: 1px;
 
             color: #fff;
             text-decoration: none;
@@ -115,6 +116,10 @@
             font-weight: bold;
             color: #337ab7;
         }
+    }
+
+    .page-item:before {
+        content: "\e041";
     }
 
     .open .page-list {
