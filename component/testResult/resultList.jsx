@@ -7,9 +7,9 @@ var ResultList = React.createClass({
     render: function () {
         var list = this.props.list;
         var resultList = [];
-        list.map(function (result) {
+        list.map(function (result, index) {
             resultList.push(
-                <tr>
+                <tr key={index}>
                     <th>{result.description}</th>
                     <td><img src={result.history_img} alt="历史图" /></td>
                     <td><img src={result.current_img} alt="当前图" /></td>
@@ -33,8 +33,7 @@ var ResultList = React.createClass({
                 </tbody>
             </table>
         );
-    },
-    componentDidMount: function () {}
+    }
 });
 
 module.exports = ResultList;
