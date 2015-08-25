@@ -241,7 +241,7 @@ var TestPage = React.createClass({
             document.getElementById('extraContainer')
         );
         React.render(
-            <Dialog>测试已经开始运行，需要消耗一些时间，请稍后查看测试结果</Dialog>,
+            <Dialog><p style={{textAlign: 'center'}}>测试已经开始运行，需要消耗一些时间，请稍后查看测试结果</p></Dialog>,
             document.getElementById('extraContainer')
         );
     },

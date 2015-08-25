@@ -11,7 +11,7 @@ var ProdForm = React.createClass({
     getInitialState: function () {
         return {
             addUrl: '/autotest/api/userHadProductLine/create',
-            editUrl: '/autotest/api/userHadProductLine/create',
+            editUrl: '/autotest/api/userHadProductLine/edit',
             fadeOut: false,
             name: '',
             nameErr: false,
@@ -193,7 +193,7 @@ var ProdForm = React.createClass({
                 email: data.email,
 
                 // 修改时需要传当前id
-                id: this.props.currentProduct ? this.props.currentProduct.id : null,
+                product_id: this.props.currentProduct ? this.props.currentProduct.id : null,
 
                 type: type
             },

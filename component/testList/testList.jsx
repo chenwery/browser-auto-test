@@ -66,8 +66,7 @@ var TestList = React.createClass({
                 </tbody>
             </table>
         );
-    },
-    componentDidMount: function () {}
+    }
 });
 
 module.exports = TestList;

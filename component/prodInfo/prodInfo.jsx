@@ -18,8 +18,7 @@ var ProdInfo = React.createClass({
     },
     getInitialState: function () {
         return {
-            infoUrl: '/get_prod_info',
-            delUrl: '/autotest/api/userHadProductLine/create'
+            delUrl: '/autotest/api/userHadProductLine/del'
         };
     },
     render: function () {
@@ -54,28 +53,6 @@ var ProdInfo = React.createClass({
     componentWillReceiveProps: function (newProps) {
         this.setState(newProps.info);
     },
-
-
-    /*// 通过网络获取产品信息
-    showProdInfo: function () {
-        var id = this.props.info.id;
-        this.getProdInfo(id);
-    },
-
-    // 真正的网络请求
-    getProdInfo: function (id) {
-        ajax({
-            url: this.state.infoUrl,
-            data: {
-                id: id
-            },
-            success: this.renderInfo,
-            error: function () {}
-        });
-    },
-    renderInfo: function (data) {
-        this.setState(data);
-    },*/
 
     edit: function (e) {
         e.preventDefault();
@@ -128,8 +105,7 @@ var ProdInfo = React.createClass({
             url: this.state.delUrl,
             type: 'post',
             data: {
-                id: id,
-                type: 'delete'
+                product_id: id
             },
             success: this.onDelete,
             error: function () {}

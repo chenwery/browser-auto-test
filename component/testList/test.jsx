@@ -19,7 +19,7 @@ var Test = React.createClass({
     },
     getInitialState: function () {
         return {
-            delUrl: '/autotest/api/pageHadFun/create',
+            delUrl: '/autotest/api/pageHadFun/del',
             runUrl: '/autotest/api/task/exec'
         };
     },
@@ -43,7 +43,6 @@ var Test = React.createClass({
             </tr>
         );
     },
-    componentDidMount: function () {},
     openTestDetail: function (e) {
         var id = this.props.info.id;
         var name = this.props.info.name;
@@ -85,8 +84,7 @@ var Test = React.createClass({
             url: this.state.delUrl,
             type: 'post',
             data: {
-                id: this.props.info.id,
-                type: 'delete'
+                fun_id: this.props.info.id
             },
             success: this.onDelete,
             error: function () {}
