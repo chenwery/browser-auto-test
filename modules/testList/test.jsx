@@ -9,7 +9,8 @@ var copy = require('copy');
 var Test = React.createClass({
     propTypes: {
         info: React.PropTypes.shape({
-            id: React.PropTypes.number.isRequired
+            id: React.PropTypes.number.isRequired,
+            name: React.PropTypes.string
         }),
         pageUrl: React.PropTypes.string,
         onDelete: React.PropTypes.func,

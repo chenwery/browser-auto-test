@@ -215,35 +215,44 @@ var TestPage = React.createClass({
     },
 
     // 运行测试
-    runTest: function (testId) {
+    runTest: function (testId, testName) {
+        var self = this;
         console.log('run test: ' + testId);
         
         var id = testId;
         var url = this.props.pageUrl;
 
-        this.postRun(id, url);
+        var runEnd = function () {
+            self.onRunEnd(testId, testName);
+        };
+
+        this.postRun(id, url, runEnd);
     },
-    postRun: function (id, url) {
+    postRun: function (id, url, callback) {
         ajax({
             url: this.state.runTestUrl,
             data: {
                 fun_id: id,
                 url: url
             },
-            success: this.onRunEnd,
+            success: callback,
             error: function () {}
         });
     },
-    onRunEnd: function (data) {
+    onRunEnd: function (testId, testName) {
         var Dialog = require('dialog/dialog');
         React.render(
             <span></span>,
             document.getElementById('extraContainer')
         );
         React.render(
-            <Dialog><p style={{textAlign: 'center'}}>测试已经开始运行，需要消耗一些时间，请稍后查看测试结果</p></Dialog>,
+            <Dialog>
+                <p style={{textAlign: 'center'}}>测试已经开始运行，需要消耗一些时间，可以稍后再查看测试结果</p>
+            </Dialog>,
             document.getElementById('extraContainer')
         );
+
+        this.viewTestResult(testId, testName);
     },
 
     // 查看测试结果
@@ -271,7 +280,7 @@ var TestPage = React.createClass({
             this.showList();
         } else {
             this.setState({
-                show: from
+                show: 'list'
             });
         }
     },
