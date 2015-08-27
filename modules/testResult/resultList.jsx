@@ -3,6 +3,9 @@ var React = require('react');
 var ajax = require('ajax');
 
 var Result = React.createClass({
+    propTypes: {
+        testId: React.PropTypes.number
+    },
     getInitialState: function () {
         return {
             setBaseImgUrl: '/autotest/api/task/setbase'
@@ -35,14 +38,15 @@ var Result = React.createClass({
 
         e.preventDefault();
 
-        this.postData(imgName);
+        this.postData(imgName, this.props.testId);
     },
-    postData: function (imgName) {
+    postData: function (imgName, testId) {
         ajax({
             url: this.state.setBaseImgUrl,
             type: 'post',
             data: {
-                img_name: imgName
+                img_name: imgName,
+                fun_id: testId
             },
             success: this.onSet
         });
@@ -54,7 +58,9 @@ var Result = React.createClass({
             document.querySelector('#extraContainer')
         );
         React.render(
-            <Dialog>设置成功，下次运行测试时将会使用当前图片作为基准图</Dialog>,
+            <Dialog>
+                <p style={{textAlign: 'center'}}>设置成功，下次运行测试时将会使用当前图片作为基准图</p>
+            </Dialog>,
             document.querySelector('#extraContainer')
         );
 
@@ -65,6 +71,9 @@ var Result = React.createClass({
 });
 
 var ResultList = React.createClass({
+    propTypes: {
+        testId: React.PropTypes.number
+    },
     getInitialState: function () {
         return {};
     },
@@ -72,6 +81,8 @@ var ResultList = React.createClass({
         var staticBasePath = 'http://' + window.location.host + '/';
         var list = this.props.list;
         var resultList = [];
+
+        var testId = this.props.testId;
 
         var setBaseImg = this.setBaseImg;
         
@@ -86,6 +97,7 @@ var ResultList = React.createClass({
             resultList.push(
                 <Result
                     key={index}
+                    testId={testId}
                     index={index}
                     description={description}
                     imgName={result.imgName}

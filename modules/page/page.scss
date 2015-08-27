@@ -46,3 +46,37 @@ h2.page-header {
         margin-left: 10px;
     }
 }
+
+.loading-icon{
+    max-width: 32px;
+    max-height: 32px;
+    background: transparent url(./img/loading.png) no-repeat 0 0/100% 100%;
+
+    animation-name: loading;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

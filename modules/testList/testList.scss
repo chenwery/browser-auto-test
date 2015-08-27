@@ -7,7 +7,11 @@
 }
 
 .view-btn:before {
-    content: "\e022";
+    content: "\e060";
+}
+
+.view-detail-btn:before {
+    content: "\e056";
 }
 
 .del-btn:before {
@@ -17,6 +21,7 @@
 .edit-btn,
 .run-btn,
 .view-btn,
+.view-detail-btn,
 .del-btn {
     margin: 0 20px 0 0;
 

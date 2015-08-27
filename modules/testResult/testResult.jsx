@@ -5,30 +5,99 @@ require('./testResult.scss');
 var ajax = require('ajax');
 
 var ResultList = require('./resultList');
+var ResultDetailList = require('./resultDetailList');
 
 var TestResult = React.createClass({
     propTypes: {
+        testId: React.PropTypes.number,
+        testName: React.PropTypes.string,
         from: React.PropTypes.string,
-        onReturn: React.PropTypes.func
+        onReturn: React.PropTypes.func,
+        type: React.PropTypes.string,
+        onRun: React.PropTypes.func
     },
     getInitialState: function () {
         return {
+            runningStatus: '400',
+            unrunStatus: '300',
             visible: true,
-            list: null,
-            resultUrl: '/autotest/api/task/getResult'
+            list: [],
+            unrun: false,
+            running: false,
+            imgUrl: '/autotest/api/task/getResult',
+            detailUrl: '/autotest/api/task/getDetail',
+            logsUrl: 'autotest/api/task/getEcho',
+            logs: '',
+            receiveAllLogs: false,
+            logsReceiveStatus: '200'
         };
     },
     render: function () {
         var resultList;
 
-        if (!this.state.list || !this.state.list.length) {
+        // 运行中
+        if (this.state.running) {
+            var receiveAllLogs = !!this.state.receiveAllLogs;
+            
+            var logs = [];
+            
+            this.state.logs
+            .split(/<br\s*\/?>/)
+            .map(function (str, index) {
+                logs.push(
+                    <p key={index}>{str}</p>
+                );
+            });
+
+            // 运行logs
+            // loading，log全部获取了就隐藏
+            // 查看结果按钮，log全部获取了才显示
             resultList =  (
-                <p>暂无测试结果，请先运行测试或等待测试运行结束</p>
+                <div>
+                    <p>测试还在运行中，请稍候，您可以退出稍后再进来查看结果...</p>
+
+                    
+                    <p>
+                        {logs}
+                    </p>
+
+                    
+                    <p style={{display: receiveAllLogs ? 'none' : ''}}>
+                        <span className="loading-icon loading"></span>
+                    </p>
+                    
+                    
+                    <p style={{display: receiveAllLogs ? '' : 'none'}}>
+                        <span>测试已经运行结束</span>
+                        <br />
+                        
+                        <button
+                            className="btn btn-primary btn-xs"
+                            onClick={this.showResults}>
+                                查看结果
+                        </button>
+                    </p>
+                    
+                </div>
             );
-        } else {
+        } else if (this.state.unrun) {
+            
             resultList = (
-                <ResultList list={this.state.list} />
+                <p>还没有运行该测试，请先运行</p>
             );
+        
+        } else {
+            
+            if (this.props.type === 'img') {
+                resultList = (
+                    <ResultList list={this.state.list} testId={this.props.testId} />
+                );
+            } else if (this.props.type === 'detail') {
+                resultList = (
+                    <ResultDetailList list={this.state.list} testId={this.props.testId} />
+                );
+            }
+        
         }
 
         return (
@@ -45,13 +114,32 @@ var TestResult = React.createClass({
     componentDidMount: function () {
         this.showResults();
     },
-    showResults: function (id) {
-        var id = id || this.props.testId;
-        this.getResults(id);
+
+    // 重新进入结果页时，需要请求结果数据
+    componentWillReceiveProps: function (newProps) {
+        var self = this;
+        var testId = newProps.testId;
+
+        // 注意延迟队列，不要阻塞当前setProps(render)
+        setTimeout(function () {
+            self.showResults(testId);
+        }, 0);
     },
-    getResults: function (testId) {
+
+    showResults: function (id) {
+        var id = typeof id === 'number' || typeof id === 'string' ?
+            id :
+            this.props.testId;
+
+        var type = this.props.type || 'img';
+        
+        this.getResults(id, type);
+    },
+    getResults: function (testId, type) {
+        var url = type === 'img' ? this.state.imgUrl : this.state.detailUrl;
+
         ajax({
-            url: this.state.resultUrl,
+            url: url,
             data: {
                 fun_id: testId
             },
@@ -60,34 +148,112 @@ var TestResult = React.createClass({
         });
     },
     renderResult: function (result) {
-        var list = result.list[0].last_result;
+        var status = result.ec + '';
+        var list;
+        var resultType = this.props.type;
+
+        // 测试是否未运行
+        this.setState({
+            unrun: status === this.state.unrunStatus
+        });
+
+        // 测试是否在运行中
+        this.setState({
+            running: status === this.state.runningStatus
+        });
+
+        // 测试未运行，则触发运行
+        if (status === this.state.unrunStatus) {
+            console.log('unrun');            
+            
+            this.runTest();
+            return;
+        }
+
+        // 测试运行中(未结束)
+        if (status === this.state.runningStatus) {
+            console.log('runing');
+
+            this.getTestLogs();
+
+            return;
+        }
+
+        // 截图结果
+        if (resultType === 'img') {
+            list = result.list ? result.list[0].last_result : [];
+
+        // 详细结果(功能测试)
+        } else if (resultType === 'detail') {
+            list = result.content.testsuite.testcase || [];
+        }
 
         this.setState({
             list: list,
             visible: true
         });
+    },
 
-        if (!list || !list.length) {
-            this.setLoadResultTimer();
+    runTest: function () {
+        this.props.onRun && this.props.onRun(this.props.testId);
+    },
+
+    // 获取运行log作展示
+    getTestLogs: function () {
+        var testId = this.props.testId;
+
+        this.fetchLogs(testId);
+    },
+    fetchLogs: function (testId) {
+        ajax({
+            url: this.state.logsUrl,
+            data: {
+                fun_id: testId
+            },
+            success: this.showLogs
+        });
+    },
+    showLogs: function (result) {
+        var status = result.ec + '';
+        var log = result.logs || result.msg;
+
+        this.setState({
+            receiveAllLogs: status === this.state.logsReceiveStatus
+        });
+
+        // 当前有log则显示
+        if (log) {
+            this.setState({
+                logs: log
+            });
+        }
+
+        // logs还没有完成
+        if (status !== this.state.logsReceiveStatus) {
+
+            // 轮询获取log
+            this.setLoadLogsTimer();
+            
+            return;
         }
     },
 
-    // 重新进入结果页时，需要请求结果数据
-    componentWillReceiveProps: function (newProps) {
-        this.showResults(newProps.testId);
-    },
-
-    // 当前还没有结果数据，则延迟3秒之后重新获取
-    setLoadResultTimer: function () {
+    // 轮询获取测试运行log
+    setLoadLogsTimer: function () {
         var self = this;
+        var testId;
+
         setTimeout(function () {
             if (self.state.visible) {
-                self.showResults();
+                testId = self.props.testId;
+                self.fetchLogs(testId);
             }
-        }, 3000);
+        }, 2000);
     },
+
+    // 返回测试suits页面
     return: function (e) {
-        e.preventDefault();
+        e && e.preventDefault();
 
         // 切换显示状态
         this.setState({

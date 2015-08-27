@@ -32,13 +32,15 @@ var TestPage = React.createClass({
             show: 'list',
             testName: null,
             testId: null,
-            steps: []
+            steps: [],
+            resultType: 'img' // detail
         };
     },
     render: function () {
         var prodName = this.props.prodName;
         var pageName = this.props.pageName;
         var testName = this.state.testName;
+        var pageId = this.props.pageid;
         var pageUrl = this.props.pageUrl;
 
         var displayTestList = this.state.show === 'list' ? 'block' : 'none';
@@ -57,21 +59,21 @@ var TestPage = React.createClass({
                 
                 <div className="test-list-container" style={{display: displayTestList}} ref="list">
                     
-                    <section className="operation-area">
-                        <button className="btn btn-primary" onClick={this.addTest}>添加功能点</button>
-                    </section>
-                    
                     <TestList
+                        pageId={pageId}
                         pageUrl={pageUrl}
                         testList={testList}
                         opentTestDetail={this.showSteps}
+                        onAdd={this.addTest}
                         onDelete={this.delTest}
                         onRun={this.runTest}
-                        onView={this.viewTestResult} />
+                        onViewImg={this.viewTestResult}
+                        onViewResult={this.viewTestResultDetail} />
                 
                 </div>
 
                 <div className="test-steps-container" style={{display: displayTestSteps}} ref="steps">
+                    
                     <TestSteps
                         testId={this.state.testId}
                         onReturn={this.showList}
@@ -80,7 +82,8 @@ var TestPage = React.createClass({
                         onModify={this.modifyStep}
                         onDel={this.delStep}
                         onRun={this.runTest}
-                        onView={this.viewTestResult} />
+                        onViewImg={this.viewTestResult}
+                        onViewResult={this.viewTestResultDetail} />
                 </div>
 
                 <div className="test-result-container" style={{display: displayTestResult}} ref="result">
@@ -141,24 +144,19 @@ var TestPage = React.createClass({
             testList: list
         });
     },
-    addTest: function (e) {
-        console.log('add test');
-        var TestForm = require('testForm/testForm');
 
-        e.preventDefault();
-        
-        React.render(
-            <span></span>,
-            document.getElementById('extraContainer')
-        );
-        
-        React.render(
-            <TestForm
-                pageId={this.props.pageId}
-                onSave={this.renderNewTest} />,
-            document.getElementById('extraContainer')
-        );
+    // 增加测试组
+    addTest: function (newTest) {
+        console.log('new test');
+        var list = copy(this.state.testList) || [];
+        list.push(newTest);
+
+        this.setState({
+            testList: list
+        });
     },
+
+    // 删除测试组
     delTest: function (testId) {
         var list = copy(this.state.testList) || [];
         var index;
@@ -178,43 +176,8 @@ var TestPage = React.createClass({
             });
         }
     },
-    renderNewTest: function (newTest) {
-        console.log('new test');
-        var list = copy(this.state.testList) || [];
-        list.push(newTest);
 
-        this.setState({
-            testList: list
-        });
-    },
-
-    // 渲染测试步骤(细节)
-    showSteps: function (id, testName) {
-        var steps;
-        var list = copy(this.state.testList);
-
-        list.map(function (test) {
-            if (test.id === id) {
-                steps = test.steps;
-            }
-        });
-
-        this.setState({
-            show: 'steps',
-            testName: testName,
-            testId: id,
-            steps: steps
-        });
-
-    },
-    showList: function () {
-        this.setState({
-            show: 'list',
-            testName: null
-        });
-    },
-
-    // 运行测试
+    // 运行测试组
     runTest: function (testId, testName) {
         var self = this;
         console.log('run test: ' + testId);
@@ -255,13 +218,59 @@ var TestPage = React.createClass({
         this.viewTestResult(testId, testName);
     },
 
+    // 显示测试组列表
+    showList: function () {
+        this.setState({
+            show: 'list',
+            testName: null
+        });
+    },
+    
+    // 渲染测试步骤(细节)
+    showSteps: function (id, testName) {
+        var steps;
+        var list = copy(this.state.testList);
+
+        list.map(function (test) {
+            if (test.id === id) {
+                steps = test.steps;
+            }
+        });
+
+        this.setState({
+            show: 'steps',
+            testName: testName,
+            testId: id,
+            steps: steps
+        });
+
+    },
+
+    // 查看测试详细结果
+    viewTestResultDetail: function (id, testName) {
+        var self = this;
+
+        this.setState({
+            resultType: 'detail'
+        });
+
+        // 真正setState会延迟执行，所以这里需要控制执行队列
+        setTimeout(function () {
+            self.showResult(id, testName);
+        }, 0);
+    },
+
     // 查看测试结果
     viewTestResult: function (id, testName) {
+        var self = this;
+
         this.setState({
-            show: 'result',
-            testName: testName || this.state.testName
+            resultType: 'img'
         });
-        this.showResult(id, testName);
+
+        setTimeout(function () {
+            self.showResult(id, testName);
+        }, 0);
     },
     showResult: function (id, testName) {
         var TestResult = require('testResult/testResult');
@@ -270,17 +279,24 @@ var TestPage = React.createClass({
             <TestResult
                 testId={id}
                 testName={testName}
+                onRun={this.runTest}
                 onReturn={this.resultReturn}
-                from={this.state.show} />,
+                from={this.state.show}
+                type={this.state.resultType} />,
             this.refs.result.getDOMNode()
         );
+
+        this.setState({
+            show: 'result',
+            testName: testName || this.state.testName
+        });
     },
     resultReturn: function (from) {
         if (from === 'list') {
             this.showList();
         } else {
             this.setState({
-                show: 'list'
+                show: from
             });
         }
     },

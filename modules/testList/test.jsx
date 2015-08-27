@@ -16,7 +16,8 @@ var Test = React.createClass({
         onDelete: React.PropTypes.func,
         opentTestDetail: React.PropTypes.func,
         onRun: React.PropTypes.func,
-        onView: React.PropTypes.func
+        onViewImg: React.PropTypes.func,
+        onViewResult: React.PropTypes.func
     },
     getInitialState: function () {
         return {
@@ -39,7 +40,8 @@ var Test = React.createClass({
                     <a className="glyphicon edit-btn" title="编辑" onClick={this.openTestDetail}></a>
                     <a className="glyphicon del-btn" title="删除" onClick={this.showDelDialog}></a>
                     <a className="glyphicon run-btn" title="运行" onClick={this.runTest}></a>
-                    <a className="glyphicon view-btn" title="查看结果" onClick={this.viewTest}></a>
+                    <a className="glyphicon view-btn" title="查看截图" onClick={this.viewTestImg}></a>
+                    <a className="glyphicon view-detail-btn" title="查看结果" onClick={this.viewTestResult}></a>
                 </td>
             </tr>
         );
@@ -95,13 +97,21 @@ var Test = React.createClass({
         var id = this.props.info.id;
         this.props.onDelete && this.props.onDelete(id);
     },
-    viewTest: function (e) {
+    viewTestImg: function (e) {
         var id = this.props.info.id;
         var name = this.props.info.name;
         
         e.preventDefault();
 
-        this.props.onView && this.props.onView(id, name);
+        this.props.onViewImg && this.props.onViewImg(id, name);
+    },
+    viewTestResult: function (e) {
+        var id = this.props.info.id;
+        var name = this.props.info.name;
+
+        e.preventDefault();
+
+        this.props.onViewResult && this.props.onViewResult(id, name);
     }
 });
 

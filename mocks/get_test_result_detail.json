@@ -1,0 +1,45 @@
+{
+    "ec": "200",
+    "content": {
+        "@attributes": {
+            "time": "5.769"
+        },
+        "testsuite": {
+            "@attributes": {
+                "name": "test capture style ",
+                "tests": "3",
+                "failures": "2",
+                "errors": "0",
+                "time": "5.769",
+                "timestamp": "2015-08-26T17:35:28.237Z",
+                "package": "C:\\Users\\moliniao\\Desktop\\auto-test\\storage\\app\\casperjs/5/1440607590/44"
+            },
+            "testcase": [
+                {
+                    "@attributes": {
+                        "name": "#calendar is found",
+                        "classname": "C:\\Users\\moliniao\\Desktop\\auto-test\\storage\\app\\casperjs/5/1440607590/44",
+                        "time": "0.397"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "name": "Find \"登陆\" within the selector \"#loginlink\"",
+                        "classname": "C:\\Users\\moliniao\\Desktop\\auto-test\\storage\\app\\casperjs/5/1440607590/44",
+                        "time": "3.897"
+                    },
+                    "failure": "no message left"
+                },
+                {
+                    "@attributes": {
+                        "name": "Visual change found for screenshot C:/Users/moliniao/Desktop/auto-test/public/result/5/img/44/7336b4f3ebf185b1d05438de4bb2ffcf.history.png (0.59% mismatch)",
+                        "classname": "C:\\Users\\moliniao\\Desktop\\auto-test\\storage\\app\\casperjs/5/1440607590/44",
+                        "time": "1.475"
+                    },
+                    "failure": "Visual change found for screenshot C:/Users/moliniao/Desktop/auto-test/public/result/5/img/44/7336b4f3ebf185b1d05438de4bb2ffcf.history.png (0.59% mismatch)"
+                }
+            ],
+            "system-out": {}
+        }
+    }
+}

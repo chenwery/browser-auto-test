@@ -15,7 +15,8 @@ var TestSteps = React.createClass({
         onModify: React.PropTypes.func,
         onDel: React.PropTypes.func,
         onRun: React.PropTypes.func,
-        onView: React.PropTypes.func
+        onViewImg: React.PropTypes.func,
+        onViewResult: React.PropTypes.func
     },
     getInitialState: function () {
         return {};
@@ -32,9 +33,10 @@ var TestSteps = React.createClass({
             <div className="test-steps">
                 <section className="operation-area">
                     <button className="btn btn-default" onClick={this.return}>返回</button>
+                    <button className="btn btn-primary" onClick={this.openAddDialog}>增加步骤</button>
                     <button className="btn btn-info" onClick={this.runTest}>运行测试</button>
-                    <button className="btn btn-success" onClick={this.viewTest}>查看结果</button>
-                    <button className="btn btn-primary" onClick={this.openAddDialog}>增加操作</button>
+                    <button className="btn btn-success" onClick={this.viewTestImg}>查看截图</button>
+                    <button className="btn btn-success" onClick={this.viewTestResult}>查看结果</button>
                 </section>
                 <div className="test-steps-container">
                     <Steps
@@ -51,12 +53,19 @@ var TestSteps = React.createClass({
         e.preventDefault();
         this.props.onRun && this.props.onRun(testId);
     },
-    viewTest: function (e) {
+    viewTestImg: function (e) {
         var testId = this.props.testId;
 
         e.preventDefault();
 
-        this.props.onView && this.props.onView(testId);
+        this.props.onViewImg && this.props.onViewImg(testId);
+    },
+    viewTestResult: function (e) {
+        var testId = this.props.testId;
+
+        e.preventDefault();
+
+        this.props.onViewResult && this.props.onViewResult(testId);
     },
     return: function (e) {
         e && e.preventDefault();
