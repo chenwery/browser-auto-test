@@ -61,7 +61,7 @@ var ProdForm = React.createClass({
                         </div>
                         
                         <div className={"form-group" + descErr}>
-                            <label className="control-label" htmlFor="description">项目描述</label>
+                            <label className="control-label" htmlFor="description">简介</label>
                             
                             <input
                                 id="description"
@@ -75,13 +75,13 @@ var ProdForm = React.createClass({
                         </div>
 
                         <div className={"form-group" + emailErr}>
-                            <label className="control-label" htmlFor="email">Email</label>
+                            <label className="control-label" htmlFor="email">关注人Email</label>
                             
                             <input
                                 id="email"
                                 name="email"
                                 className="form-control"
-                                placeholder="简单描述你的项目"
+                                placeholder="可用英文逗号分隔多个email"
                                 tabIndex="3"
                                 value={email}
                                 onChange={this.setEmail} />
@@ -89,7 +89,7 @@ var ProdForm = React.createClass({
                         </div>
 
                         <div className={"form-group" + cookieErr}>
-                            <label className="control-label" htmlFor="cookie">cookie</label>
+                            <label className="control-label" htmlFor="cookie">cookie配置</label>
                             
                             <input
                                 id="cookie"

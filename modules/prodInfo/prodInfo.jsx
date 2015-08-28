@@ -4,6 +4,8 @@ var copy = require('copy');
 
 var ajax = require('ajax');
 
+require('./prodInfo.scss');
+
 var ProdInfo = React.createClass({
     proTypes: {
         info: React.PropTypes.shape({
@@ -36,9 +38,22 @@ var ProdInfo = React.createClass({
                 </h2>
 
                 <div className="product-info-container">
-                    <p>{description}</p>
-                    <p>{email}</p>
-                    <p>{cookie}</p>
+                    <table className="product-info-table">
+                        <tbody>
+                            <tr>
+                                <th>项目简介：</th>
+                                <td>{description}</td>
+                            </tr>
+                            <tr>
+                                <th>关注人Email：</th>
+                                <td>{email}</td>
+                            </tr>
+                            <tr>
+                                <th>cookie配置：</th>
+                                <td>{cookie || '无'}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         );
