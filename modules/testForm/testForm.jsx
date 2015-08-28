@@ -6,8 +6,8 @@ var Dialog = require('dialog/dialog');
 
 var TestForm = React.createClass({
     proTypes: {
-        pageId: React.PropTypes.number,
-        onSave: React.PropTypes.func.isRequired
+        pageId: React.PropTypes.number.isRequired,
+        onSave: React.PropTypes.func
     },
     getInitialState: function () {
         return {

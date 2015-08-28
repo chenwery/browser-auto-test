@@ -19,8 +19,8 @@ var Header = React.createClass({
         return (
             <header>
                 <div ref="logo" className="logo">
-                    <span className="logo-img">LOGO</span>
-                    <span className="description"> - slogen...</span>
+                    <span className="logo-img">Frontend Auto Test</span>
+                    <span className="description"></span>
                 </div>
 
                 <User

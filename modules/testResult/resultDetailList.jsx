@@ -12,9 +12,13 @@ var DetailList = React.createClass({
         var status;
 
         if (failiur) {
-            status = (<span>fail</span>)
+            status = (
+                <span className="test-fail">fail</span>
+            );
         } else {
-            status = (<span>pass</span>)
+            status = (
+                <span className="test-success">pass</span>
+            );
         }
 
         return (
@@ -26,7 +30,7 @@ var DetailList = React.createClass({
                     {attrs.name}
                 </td>
                 <td>
-                    {attrs.time}
+                    {attrs.time + '秒'}
                 </td>
                 <td>
                     {status}
@@ -51,13 +55,13 @@ var ResultDetailList = React.createClass({
         });
 
         return (
-            <table className="table test-result">
+            <table className="table test-result detail-result">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>name</th>
-                        <th>time</th>
-                        <th>status</th>
+                        <th>测试内容</th>
+                        <th>耗时</th>
+                        <th>结果</th>
                     </tr>
                 </thead>
                 <tbody>

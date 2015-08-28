@@ -15,7 +15,7 @@
 
     &::-webkit-scrollbar-track-piece{background-color:#fff;}
     &::-webkit-scrollbar{width:3px;}
-    &::-webkit-scrollbar-thumb{background:#999;} 
+    &::-webkit-scrollbar-thumb{background:#999;border-radius: 3px;} 
 
     .catelog-add {
         display: flex;

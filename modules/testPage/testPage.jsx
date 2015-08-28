@@ -40,7 +40,7 @@ var TestPage = React.createClass({
         var prodName = this.props.prodName;
         var pageName = this.props.pageName;
         var testName = this.state.testName;
-        var pageId = this.props.pageid;
+        var pageId = this.props.pageId;
         var pageUrl = this.props.pageUrl;
 
         var displayTestList = this.state.show === 'list' ? 'block' : 'none';

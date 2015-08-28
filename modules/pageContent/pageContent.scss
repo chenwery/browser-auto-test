@@ -1,6 +1,13 @@
 .page-content{
-    margin: 0 0 0 220px;
+    position: absolute;
+    left: 220px;
+    right: 0;
+    bottom: 0;
+    top: 50px;
+
     padding: 0 20px;
+    
+    overflow: auto;
 
     &:after {
         content: "";
@@ -9,4 +16,8 @@
         height: 0;
         clear: both;
     }
+
+    &::-webkit-scrollbar-track-piece{background-color:#fff;}
+    &::-webkit-scrollbar{width:5px;}
+    &::-webkit-scrollbar-thumb{background:#999;border-radius: 5px;} 
 }

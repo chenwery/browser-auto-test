@@ -53,7 +53,13 @@ var TestList = React.createClass({
 
         if (!list.length) {
             return (
-                <div>本页面还没有任何测试功能点,请先添加</div>
+                <div className="test-list">
+                    <section className="operation-area">
+                        <button className="btn btn-primary" onClick={this.openAddTestForm}>添加功能点</button>
+                    </section>
+
+                    <div>本页面还没有任何测试功能点,请先添加</div>
+                </div>
             );
         }
 
