@@ -1,0 +1,34 @@
+.sign-page {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: auto;
+
+    .form-area {
+        width: 400px;
+        padding: 20px;
+        margin: 0 auto;
+    }
+
+    form {
+        label {
+            font-weight: normal;
+        }
+    }
+
+    .sign-header {
+        margin: 0 0 20px;
+
+        font-size: 16px;
+
+        a {
+            &:hover,
+            &:focus {
+                color: #337ab7;
+                text-decoration: none;
+            }
+        }
+    }
+}

@@ -1,6 +1,10 @@
 var React = require('react');
 
-var Page = require('page/page');
+require('page/page.scss');
+require('header/header.scss');
+require('user/user.scss');
+require('main/main.scss');
+
 var Catelog = require('catelog/catelog');
 var PageContent = require('pageContent/pageContent');
 
@@ -11,14 +15,18 @@ var Index = React.createClass({
     },
     render: function () {
         return (
-            <Page>
+            <div className="app">
+                
                 <Catelog />
                 
                 <PageContent>
+                    
                     <div id="index">
                     </div>
+                
                 </PageContent>
-            </Page>
+            
+            </div>
         );
     },
     componentDidMount: function () {
