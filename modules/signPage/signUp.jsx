@@ -38,7 +38,9 @@ var SignUp = React.createClass({
         var passwordcErr = this.state.passwordcErr ? ' has-error' : '';
 
         return (
-            <form className="form-horizontal" style={{display: show}}>
+            <form className="form-horizontal" style={{display: show}} action={this.state.url} method="POST">
+
+                <input type="hidden" name="_token" ref="token" />
 
                 <div className={"form-group" + nameErr}>
                     
@@ -49,6 +51,7 @@ var SignUp = React.createClass({
                             type="text"
                             className="form-control"
                             id="name"
+                            name="name"
                             autoFocus={focus}
                             placeholder="用户名" />
                     </div>
@@ -63,6 +66,7 @@ var SignUp = React.createClass({
                             type="email"
                             className="form-control"
                             id="email"
+                            name="email"
                             placeholder="Email" />
                     </div>
                 </div>
@@ -76,6 +80,7 @@ var SignUp = React.createClass({
                           type="password"
                           className="form-control"
                           id="password"
+                          name="password"
                           placeholder="密码" />
                     </div>
                 </div>
@@ -89,13 +94,14 @@ var SignUp = React.createClass({
                           type="password"
                           className="form-control"
                           id="passwordc"
+                          name="password_confirmation"
                           placeholder="确认密码" />
                     </div>
                 </div>
               
                 <div className="form-group">
                     <div className="col-sm-12">
-                        <button type="submit" className="btn btn-primary" onClick={this.signup}>
+                        <button type="submit" className="btn btn-primary" onClick={this.submit}>
                             注&nbsp;&nbsp;册
                         </button>
                     </div>
@@ -140,13 +146,13 @@ var SignUp = React.createClass({
         }
 
     },
-    signup: function (e) {
+    submit: function (e) {
+        this.refs.token.getDOMNode().value = document.querySelector('[name=_token]').value;
+
         var name = this.state.name.trim();
         var email = this.state.email.trim();
         var password = this.state.password.trim();
         var passwordc = this.state.passwordc.trim();
-
-        e.preventDefault();
 
         this.setState({
             nameErr: !name,
@@ -155,16 +161,17 @@ var SignUp = React.createClass({
             passwordcErr: !passwordc || passwordc !== password
         });
 
-        if (this.state.nameErr || this.state.emailErr || this.state.passwordErr || this.state.passwordcErr) {
-            return;
+        if (!name || !email || !password || !passwordc || passwordc !== password) {
+            e.preventDefault();
         }
 
-        this.postData({
+        /*this.postData({
             name: name,
             email: email,
             password: password,
             passwordc: passwordc
-        });
+        });*/
+        return true;
     },
     postData: function (data) {
         ajax({

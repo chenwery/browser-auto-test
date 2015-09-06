@@ -32,7 +32,9 @@ var SignIn = React.createClass({
         var passwordErr = this.state.passwordErr ? ' has-error' : '';
 
         return (
-            <form className="form-horizontal" style={{display: show}}>
+            <form className="form-horizontal" style={{display: show}} action={this.state.url} method="POST">
+
+                <input type="hidden" name="_token" ref="token" />
                 
                 <div className={"form-group" + nameErr}>
                     
@@ -42,6 +44,7 @@ var SignIn = React.createClass({
                             type="text"
                             className="form-control"
                             id="name"
+                            name="email"
                             autoFocus={focus}
                             placeholder="用户名/Email"
                             onChange={this.set} />
@@ -56,6 +59,7 @@ var SignIn = React.createClass({
                             type="password"
                             className="form-control"
                             id="password"
+                            name="password"
                             placeholder="密码"
                             onChange={this.set} />
                     </div>
@@ -68,7 +72,9 @@ var SignIn = React.createClass({
                             <label>
                                 <input
                                     id="remember"
+                                    name="remember"
                                     type="checkbox"
+                                    value="on"
                                     checked={remember}
                                     onChange={this.set} /> 记住我
                             </label>
@@ -78,7 +84,7 @@ var SignIn = React.createClass({
               
                 <div className="form-group">
                     <div className="col-sm-12">
-                        <button type="submit" className="btn btn-primary" onClick={this.signin}>
+                        <button type="submit" className="btn btn-primary" onClick={this.submit}>
                             登&nbsp;&nbsp;录
                         </button>
                     </div>
@@ -123,27 +129,28 @@ var SignIn = React.createClass({
         }
 
     },
-    signin: function (e) {
+    submit: function (e) {
+        this.refs.token.getDOMNode().value = document.querySelector('[name=_token]').value;
+
         var name = this.state.name.trim();
         var password = this.state.password.trim();
         var remember = this.state.remember;
-
-        e.preventDefault();
 
         this.setState({
             nameErr: !name,
             passwordErr: !password
         });
 
-        if (this.state.nameErr || this.state.passwordErr) {
-            return;
+        if (!name || !password) {
+            e.preventDefault();
         }
 
-        this.postData({
+        /*this.postData({
             name: name,
             password: password,
             remember: remember
-        });
+        });*/
+        return true;
     },
     postData: function (data) {
         ajax({
