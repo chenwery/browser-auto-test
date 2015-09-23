@@ -6,7 +6,9 @@ var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 module.exports = {
     entry: {
         app: [path.resolve(__dirname, 'modules/app.jsx')],
-        sign: [path.resolve(__dirname, 'modules/sign.jsx')]
+        sign: [path.resolve(__dirname, 'modules/sign.jsx')],
+        signin: [path.resolve(__dirname, 'modules/signin.jsx')],
+        signup: [path.resolve(__dirname, 'modules/signup.jsx')],
     },
     output: {
         path: path.resolve(__dirname, 'public'),

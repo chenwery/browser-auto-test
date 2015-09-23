@@ -1,5 +1,5 @@
 {
-  "name": "browser auto test platform",
+  "name": "browser-auto-test-platform",
   "version": "0.0.1",
   "description": "browser auto test platform",
   "main": "index.js",
@@ -21,8 +21,8 @@
   },
   "scripts": {
     "test": "test",
-    "deploy": "node deploy.js"
+    "start": "node deploy.js && webpack -d"
   },
-  "author": "",
+  "author": "chenwery",
   "license": "ISC"
 }
